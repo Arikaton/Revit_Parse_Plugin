@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>FBXExporter</Name>
+    <Assembly>FBXExporter.dll</Assembly>
+    <AddInId>120BD61F-5CE2-4333-8682-E74567903376</AddInId>
+    <FullClassName>FBXExporter.Main</FullClassName>
+    <VendorId>ARIK</VendorId>
+    <VendorDescription>Arikaton, http://arikaton.software</VendorDescription>
+    <VisibilityMode>AlwaysVisible</VisibilityMode>
+    <Description>"Helper plugin for export fbx"</Description>
+  </AddIn>
+</RevitAddIns>
