@@ -148,7 +148,7 @@ namespace FBXExporter.UI
             this.FilePath.AutoEllipsis = true;
             this.FilePath.AutoSize = true;
             this.FilePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.FilePath.Location = new System.Drawing.Point(7, 197);
+            this.FilePath.Location = new System.Drawing.Point(7, 194);
             this.FilePath.MaximumSize = new System.Drawing.Size(345, 20);
             this.FilePath.Name = "FilePath";
             this.FilePath.Size = new System.Drawing.Size(343, 20);
@@ -158,7 +158,7 @@ namespace FBXExporter.UI
             // 
             // ChangePathButton
             // 
-            this.ChangePathButton.Location = new System.Drawing.Point(355, 194);
+            this.ChangePathButton.Location = new System.Drawing.Point(355, 191);
             this.ChangePathButton.Name = "ChangePathButton";
             this.ChangePathButton.Size = new System.Drawing.Size(75, 23);
             this.ChangePathButton.TabIndex = 12;
@@ -186,12 +186,14 @@ namespace FBXExporter.UI
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(436, 25);
             this.panel3.TabIndex = 14;
+            this.panel3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel3_MouseDown);
+            this.panel3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel3_MouseMove);
             // 
             // PropertyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(436, 226);
+            this.ClientSize = new System.Drawing.Size(436, 222);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.ChangePathButton);
             this.Controls.Add(this.FilePath);

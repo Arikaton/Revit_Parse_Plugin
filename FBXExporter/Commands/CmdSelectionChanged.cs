@@ -4,6 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Windows;
+using FBXExporter.Entity;
 
 namespace FBXExporter
 {

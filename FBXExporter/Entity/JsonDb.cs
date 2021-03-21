@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-using System.Threading.Tasks;
 
-namespace FBXExporter
+namespace FBXExporter.Entity
 {
     class JsonDb : IElementDatabase
     {

@@ -1,6 +1,6 @@
 ﻿using Autodesk.Revit.UI;
+using FBXExporter.Utils;
 using System.Reflection;
-using System.Windows.Media.Imaging;
 
 namespace FBXExporter
 {
@@ -14,16 +14,8 @@ namespace FBXExporter
         public Result OnStartup(UIControlledApplication application)
         {
             var exporterTabName = "FBXExporter";
-            var propertyTabName = "Show Property";
             application.CreateRibbonTab(exporterTabName);
-            application.CreateRibbonTab(propertyTabName);
             var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-
-            var exportButtonData = new PushButtonData(
-                "Export button",
-                "Export",
-                assemblyLocation,
-                "FBXExporter.ExportCommand");
             var propertyButtonData = new PushButtonData(
                 "Property button",
                 "Show Properties",
@@ -31,11 +23,11 @@ namespace FBXExporter
                 "FBXExporter.CmdSelectionChanged");
 
             var pannelAnnotation = application.CreateRibbonPanel(exporterTabName, "FBXExporter");
-            var exportButton = pannelAnnotation.AddItem(exportButtonData) as PushButton;
             var propertyButton = pannelAnnotation.AddItem(propertyButtonData) as PushButton;
-            exportButton.LargeImage = new BitmapImage(new System.Uri(@"C:\Users\user\RiderProjects\FBXExporter\FBXExporter\Resources\export-icon"));
-            propertyButton.LargeImage = new BitmapImage(new System.Uri(@"C:\Users\user\RiderProjects\FBXExporter\FBXExporter\Resources\property-icon.png"));
+            propertyButton.LargeImage = Resources.property_icon.ToBitmapImage();
             return Result.Succeeded;
         }
+
+
     }
 }

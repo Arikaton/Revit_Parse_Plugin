@@ -1,10 +1,13 @@
-﻿using System.Windows.Forms;
+﻿using FBXExporter.Entity;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace FBXExporter.UI
 {
     public partial class PropertyForm : Form
     {
         private PropertiesController controller;
+        private Point formPointBeforeMove;
 
         public PropertyForm(PropertiesController controller)
         {
@@ -25,10 +28,8 @@ namespace FBXExporter.UI
             controller.SaveCurrentElementData();
         }
 
-        public ElementData GetCurrentElementData()
-        {
-            return new ElementData(ElementIdValue.Text, ElementNameValue.Text, NameText.Text, ParentNameText.Text);
-        }
+        public ElementData GetCurrentElementData() 
+            => new ElementData(ElementIdValue.Text, ElementNameValue.Text, NameText.Text, ParentNameText.Text);
 
         private void ChangePathButton_MouseClick(object sender, MouseEventArgs e)
         {
@@ -51,6 +52,20 @@ namespace FBXExporter.UI
         private void CloseButton_MouseClick(object sender, MouseEventArgs e)
         {
             controller.CloseForm();
+        }
+
+        private void panel3_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Left += e.X - formPointBeforeMove.X;
+                Top += e.Y - formPointBeforeMove.Y;
+            }
+        }
+
+        private void panel3_MouseDown(object sender, MouseEventArgs e)
+        {
+            formPointBeforeMove = e.Location;
         }
     }
 }

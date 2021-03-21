@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FBXExporter
+﻿namespace FBXExporter.Entity
 {
     [Newtonsoft.Json.JsonObject]
     public class ElementData

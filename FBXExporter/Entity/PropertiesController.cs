@@ -2,7 +2,7 @@
 using FBXExporter.UI;
 using System.IO;
 
-namespace FBXExporter
+namespace FBXExporter.Entity
 {
     public class PropertiesController
     {

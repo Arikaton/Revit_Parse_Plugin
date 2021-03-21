@@ -24,7 +24,7 @@ namespace FBXExporter
             {
                 result.Append($"Name: {elem.Name} | ID: {elem.Id}\n");
             }
-            MessageBox.Show($"Element count{elementsInView.Count}\n{result.ToString()}");
+            MessageBox.Show($"Elements count: {elementsInView.Count}\n{result}");
 
             /*var selection = uiApp.ActiveUIDocument.Selection;
             pickedref = selection.PickObject(Autodesk.Revit.UI.Selection.ObjectType.Element, "Please select a group");
