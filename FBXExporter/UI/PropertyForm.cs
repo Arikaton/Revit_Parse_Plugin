@@ -19,22 +19,26 @@ namespace FBXExporter.UI
         {
             if (!isGroup)
             {
-                ElementId.Text = "Element Id:";
-                ElementName.Text = "Element Name:";
+                Id.Text = "Element Id:";
+                RevitName.Text = "Element Name:";
             } else
             {
-                ElementId.Text = "Group Id:";
-                ElementName.Text = "Group Name:";
+                Id.Text = "Group Id:";
+                RevitName.Text = "Group Name:";
             }
             
             ElementIdValue.Text = elementData.Id;
-            ElementNameValue.Text = elementData.Name;
-            NameText.Text = !string.IsNullOrEmpty(elementData.ElementName) ? elementData.ElementName : ""; 
+            RevitNameValue.Text = elementData.RevitName;
+            NameText.Text = !string.IsNullOrEmpty(elementData.Name) ? elementData.Name : ""; 
             ParentNameText.Text = !string.IsNullOrEmpty(elementData.ParentName) ? elementData.ParentName : ""; 
         }
 
         public ElementData GetCurrentElementData() 
-            => new ElementData(ElementIdValue.Text, ElementNameValue.Text, NameText.Text, ParentNameText.Text);
+            => new ElementData(
+                ElementIdValue.Text, 
+                RevitNameValue.Text, 
+                NameText.Text, 
+                ParentNameText.Text);
 
         private void ChangePathButton_MouseClick(object sender, MouseEventArgs e)
         {

@@ -29,14 +29,14 @@ namespace FBXExporter.UI
         /// </summary>
         private void InitializeComponent()
         {
-            this.ElementId = new System.Windows.Forms.Label();
+            this.Id = new System.Windows.Forms.Label();
             this.NameLabel = new System.Windows.Forms.Label();
-            this.ParentName = new System.Windows.Forms.Label();
+            this.ParentNameLabel = new System.Windows.Forms.Label();
             this.ElementIdValue = new System.Windows.Forms.Label();
             this.NameText = new System.Windows.Forms.TextBox();
             this.ParentNameText = new System.Windows.Forms.TextBox();
-            this.ElementName = new System.Windows.Forms.Label();
-            this.ElementNameValue = new System.Windows.Forms.Label();
+            this.RevitName = new System.Windows.Forms.Label();
+            this.RevitNameValue = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.FilePath = new System.Windows.Forms.Label();
@@ -48,15 +48,15 @@ namespace FBXExporter.UI
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // ElementId
+            // Id
             // 
-            this.ElementId.AutoSize = true;
-            this.ElementId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ElementId.Location = new System.Drawing.Point(3, 8);
-            this.ElementId.Name = "ElementId";
-            this.ElementId.Size = new System.Drawing.Size(89, 20);
-            this.ElementId.TabIndex = 0;
-            this.ElementId.Text = "Element ID";
+            this.Id.AutoSize = true;
+            this.Id.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Id.Location = new System.Drawing.Point(3, 8);
+            this.Id.Name = "Id";
+            this.Id.Size = new System.Drawing.Size(89, 20);
+            this.Id.TabIndex = 0;
+            this.Id.Text = "Element ID";
             // 
             // NameLabel
             // 
@@ -68,15 +68,15 @@ namespace FBXExporter.UI
             this.NameLabel.TabIndex = 1;
             this.NameLabel.Text = "Name";
             // 
-            // ParentName
+            // ParentNameLabel
             // 
-            this.ParentName.AutoSize = true;
-            this.ParentName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ParentName.Location = new System.Drawing.Point(3, 35);
-            this.ParentName.Name = "ParentName";
-            this.ParentName.Size = new System.Drawing.Size(102, 20);
-            this.ParentName.TabIndex = 2;
-            this.ParentName.Text = "Parent Name";
+            this.ParentNameLabel.AutoSize = true;
+            this.ParentNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ParentNameLabel.Location = new System.Drawing.Point(3, 35);
+            this.ParentNameLabel.Name = "ParentNameLabel";
+            this.ParentNameLabel.Size = new System.Drawing.Size(102, 20);
+            this.ParentNameLabel.TabIndex = 2;
+            this.ParentNameLabel.Text = "Parent Name";
             // 
             // ElementIdValue
             // 
@@ -101,31 +101,31 @@ namespace FBXExporter.UI
             this.ParentNameText.Size = new System.Drawing.Size(268, 20);
             this.ParentNameText.TabIndex = 5;
             // 
-            // ElementName
+            // RevitName
             // 
-            this.ElementName.AutoSize = true;
-            this.ElementName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ElementName.Location = new System.Drawing.Point(3, 29);
-            this.ElementName.Name = "ElementName";
-            this.ElementName.Size = new System.Drawing.Size(114, 20);
-            this.ElementName.TabIndex = 7;
-            this.ElementName.Text = "Element Name";
+            this.RevitName.AutoSize = true;
+            this.RevitName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.RevitName.Location = new System.Drawing.Point(3, 29);
+            this.RevitName.Name = "RevitName";
+            this.RevitName.Size = new System.Drawing.Size(114, 20);
+            this.RevitName.TabIndex = 7;
+            this.RevitName.Text = "Element Name";
             // 
-            // ElementNameValue
+            // RevitNameValue
             // 
-            this.ElementNameValue.AutoSize = true;
-            this.ElementNameValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ElementNameValue.Location = new System.Drawing.Point(142, 29);
-            this.ElementNameValue.Name = "ElementNameValue";
-            this.ElementNameValue.Size = new System.Drawing.Size(0, 20);
-            this.ElementNameValue.TabIndex = 8;
+            this.RevitNameValue.AutoSize = true;
+            this.RevitNameValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.RevitNameValue.Location = new System.Drawing.Point(142, 29);
+            this.RevitNameValue.Name = "RevitNameValue";
+            this.RevitNameValue.Size = new System.Drawing.Size(0, 20);
+            this.RevitNameValue.TabIndex = 8;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.ElementId);
-            this.panel1.Controls.Add(this.ElementNameValue);
+            this.panel1.Controls.Add(this.Id);
+            this.panel1.Controls.Add(this.RevitNameValue);
             this.panel1.Controls.Add(this.ElementIdValue);
-            this.panel1.Controls.Add(this.ElementName);
+            this.panel1.Controls.Add(this.RevitName);
             this.panel1.Location = new System.Drawing.Point(3, 113);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(427, 58);
@@ -135,7 +135,7 @@ namespace FBXExporter.UI
             // 
             this.panel2.Controls.Add(this.NameText);
             this.panel2.Controls.Add(this.NameLabel);
-            this.panel2.Controls.Add(this.ParentName);
+            this.panel2.Controls.Add(this.ParentNameLabel);
             this.panel2.Controls.Add(this.ParentNameText);
             this.panel2.Location = new System.Drawing.Point(3, 35);
             this.panel2.Name = "panel2";
@@ -215,14 +215,14 @@ namespace FBXExporter.UI
 
         #endregion
 
-        private System.Windows.Forms.Label ElementId;
+        private System.Windows.Forms.Label Id;
         private System.Windows.Forms.Label NameLabel;
-        private System.Windows.Forms.Label ParentName;
+        private System.Windows.Forms.Label ParentNameLabel;
         private System.Windows.Forms.Label ElementIdValue;
         private System.Windows.Forms.TextBox NameText;
         private System.Windows.Forms.TextBox ParentNameText;
-        private System.Windows.Forms.Label ElementName;
-        private System.Windows.Forms.Label ElementNameValue;
+        private System.Windows.Forms.Label RevitName;
+        private System.Windows.Forms.Label RevitNameValue;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label FilePath;

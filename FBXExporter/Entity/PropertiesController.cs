@@ -63,12 +63,14 @@ namespace FBXExporter.Entity
                 var counter = 0;
                 foreach (var element in selectedElements)
                 {
+                    var id = element.Id.IntegerValue.ToString();
                     var newElementData = new ElementData(
-                        element.Id.IntegerValue.ToString(),
+                        id,
                         element.Name,
-                        $"{elementData.ElementName} ({counter++})",
-                        elementData.ParentName);
-                    jsonDb.AddElement(element.Id.IntegerValue.ToString(), newElementData);
+                        $"{elementData.Name} ({counter++})",
+                        elementData.ParentName,
+                        elementData.RevitName);
+                    jsonDb.AddElement(id, newElementData);
                 }
             }
             jsonDb.AddElement(elementData.Id, elementData);

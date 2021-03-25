@@ -4,28 +4,30 @@
     public class ElementData
     {
         public string Id;
+        public string RevitName;
         public string Name;
-        public string ElementName;
         public string ParentName;
+        public string GroupName;
 
         [Newtonsoft.Json.JsonConstructor]
-        public ElementData(string id, string name, string elementName, string parentName)
+        public ElementData(string id, string revitName, string name, string parentName, string groupName = null)
         {
             Id = id;
+            RevitName = revitName;
             Name = name;
-            ElementName = elementName;
             ParentName = parentName;
+            GroupName = groupName;
         }
 
-        public ElementData(string id, string name)
+        public ElementData(string id, string revitName)
         {
             Id = id;
-            Name = name;
+            RevitName = revitName;
         }
 
         public override string ToString()
         {
-            return $"Id: {Id} | Name | {Name} | Element Name: {ElementName} | Parent Name | {ParentName}";
+            return $"Id: {Id} | Name | {RevitName} | Element Name: {Name} | Parent Name | {ParentName}";
         }
     }
 }
