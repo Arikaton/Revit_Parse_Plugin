@@ -15,17 +15,22 @@ namespace FBXExporter.UI
             this.controller = controller;
         }
 
-        public void UpdateProperties(ElementData elementData)
+        public void UpdateProperties(ElementData elementData, bool isGroup)
         {
+            if (!isGroup)
+            {
+                ElementId.Text = "Element Id:";
+                ElementName.Text = "Element Name:";
+            } else
+            {
+                ElementId.Text = "Group Id:";
+                ElementName.Text = "Group Name:";
+            }
+            
             ElementIdValue.Text = elementData.Id;
             ElementNameValue.Text = elementData.Name;
             NameText.Text = !string.IsNullOrEmpty(elementData.ElementName) ? elementData.ElementName : ""; 
             ParentNameText.Text = !string.IsNullOrEmpty(elementData.ParentName) ? elementData.ParentName : ""; 
-        }
-
-        private void SaveButton_MouseClick(object sender, MouseEventArgs e)
-        {
-            controller.SaveCurrentElementData();
         }
 
         public ElementData GetCurrentElementData() 
