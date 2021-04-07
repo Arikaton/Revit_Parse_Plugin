@@ -22,6 +22,12 @@ namespace FBXExporter
                 assemblyLocation,
                 "FBXExporter.CmdSelectionChanged");
 
+            /*var deletePushButton = new PushButtonData(
+                "GetIds button",
+                "Get ids",
+                assemblyLocation,
+                "FBXExporter.ExportCommand");*/
+
             var pannelAnnotation = application.CreateRibbonPanel(exporterTabName, "FBXExporter");
             var propertyButton = pannelAnnotation.AddItem(propertyButtonData) as PushButton;
             propertyButton.LargeImage = Resources.property_icon.ToBitmapImage();

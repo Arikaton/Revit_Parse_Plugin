@@ -1,23 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Windows;
 using FBXExporter.Entity;
-using TaskDialog = Autodesk.Revit.UI.TaskDialog;
 
 namespace FBXExporter
 {
-    [Transaction(TransactionMode.ReadOnly)]
+    [Transaction(TransactionMode.Manual)]
     class CmdSelectionChanged : IExternalCommand
     {
         private static UIApplication _uiapp;
         private static bool _subscribed = false;
         private static PropertiesController propertiesController;
-
         private static void PanelEvent(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             Debug.Assert(sender is RibbonTab,
@@ -30,8 +27,6 @@ namespace FBXExporter
                 var ids = activeUI.Selection.GetElementIds();
                 if (ids.Count == 0) return;
                 var firstSelectedElement = document.GetElement(ids.First());
-                //var joinedElements = JoinGeometryUtils.GetJoinedElements(document, firstSelectedElement);
-                //MessageBox.Show("Joined Elements count: " + joinedElements.Count);
                 
                 if (firstSelectedElement is Group group)
                 {
@@ -70,7 +65,7 @@ namespace FBXExporter
             if (!_subscribed)
             {
                 Subscribe();
-                propertiesController.Initialize();
+                propertiesController.RefreshData(_uiapp);
             }
             else
             {
@@ -85,7 +80,7 @@ namespace FBXExporter
             if (propertiesController is null)
             {
                 propertiesController = new PropertiesController();
-                propertiesController.LoadDb();
+                propertiesController.OnEnable();
             }
         }
 

@@ -1,8 +1,8 @@
 ﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using FBXExporter.UI;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
 
 namespace FBXExporter.Entity
 {
@@ -12,22 +12,28 @@ namespace FBXExporter.Entity
         private JsonDb jsonDb;
         private string dbPath;
         private List<Element> selectedElements;
+        private UIApplication _uiApp;
 
         public bool Initialized { get; private set; }
 
-        public void LoadDb()
+        public void RefreshData(UIApplication uiApp)
         {
-            dbPath = Directory.GetCurrentDirectory() + "\\DefaultDatabase.json";
-            jsonDb = new JsonDb();
-            jsonDb.Load(dbPath);
+            SetupForm();
+            _uiApp = uiApp;
+            Initialized = true;
         }
 
-        public void Initialize()
+        private void SetupForm()
         {
             form = new PropertyForm(this);
             form.Show();
             form.UpdateDatabasePath(dbPath);
-            Initialized = true;
+        }
+
+        public void OnEnable()
+        {
+            dbPath = Directory.GetCurrentDirectory() + "\\DefaultDatabase.json";
+            jsonDb = JsonDbSerializer.Deserialize(dbPath);
         }
 
         public void CloseForm()
@@ -41,13 +47,13 @@ namespace FBXExporter.Entity
         public void SaveAllData()
         {
             SaveSelectedElementData();
-            jsonDb.Save(dbPath);
+            JsonDbSerializer.Serialize(jsonDb, dbPath);
         }
 
         public void ChangeDatabasePath(string newPath)
         {
             dbPath = newPath;
-            jsonDb.Load(dbPath);
+            jsonDb = JsonDbSerializer.Deserialize(newPath);
             form.UpdateDatabasePath(newPath);
         }
 

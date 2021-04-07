@@ -5,45 +5,30 @@ using Newtonsoft.Json;
 
 namespace FBXExporter.Entity
 {
-    class JsonDb : IElementDatabase
+    public class JsonDb
     {
-        Dictionary<string, ElementData> elementDatas = new Dictionary<string, ElementData>();
+        public readonly Dictionary<string, ElementData> Elements;
+        public Dictionary<string, string> Dictionary;
+
+        public JsonDb(Dictionary<string, ElementData> elements, Dictionary<string, string> dictionary)
+        {
+            Elements = elements;
+            Dictionary = dictionary;
+        }
 
         public void AddElement(string id, ElementData elementData)
         {
-            if (elementDatas.ContainsKey(id))
-                elementDatas[id] = elementData;
+            if (Elements.ContainsKey(id))
+                Elements[id] = elementData;
             else
-                elementDatas.Add(id, elementData);
+                Elements.Add(id, elementData);
         }
 
         public ElementData GetElementById(string id)
         {
-            if (elementDatas.ContainsKey(id))
-                return elementDatas[id];
+            if (Elements.ContainsKey(id))
+                return Elements[id];
             return null;
-        }
-
-        public void Save(string path)
-        {
-            using (var sw = new StreamWriter(path))
-            {
-                var serializedData = JsonConvert.SerializeObject(elementDatas);
-                sw.Write(serializedData);
-            }
-        }
-
-        public void Load(string path)
-        {
-            if (!File.Exists(path))
-            {
-                File.Create(path);
-                return;
-            }
-            var json = File.ReadAllText(path);
-            elementDatas = JsonConvert.DeserializeObject<Dictionary<string, ElementData>>(json);
-            if (elementDatas is null)
-                elementDatas = new Dictionary<string, ElementData>();
         }
     }
 }

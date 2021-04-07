@@ -1,7 +1,7 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System.Collections;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -13,26 +13,20 @@ namespace FBXExporter
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var uiApp = commandData.Application;
-            var doc = uiApp.ActiveUIDocument.Document;
-            //Reference pickedref;
-            var allElements = new FilteredElementCollector(doc, doc.ActiveView.Id);
-            var elementsInView = (IList)allElements.ToElements();
-
+            var _uiapp = commandData.Application;
+            var doc = _uiapp.ActiveUIDocument;
+            var selectedElementId = doc.Selection.GetElementIds();
+            var element = doc.Document.GetElement(selectedElementId.First());
+            var transaction = new Transaction(_uiapp.ActiveUIDocument.Document, "Test delete");
+            transaction.Start();
+            var ids = _uiapp.ActiveUIDocument.Document.Delete(element.Id);
             var result = new StringBuilder();
-            foreach(Element elem in elementsInView)
+            foreach (var id in ids)
             {
-                result.Append($"Name: {elem.Name} | ID: {elem.Id}\n");
+                result.Append(id.IntegerValue + "\n");
             }
-            MessageBox.Show($"Elements count: {elementsInView.Count}\n{result}");
-
-            /*var selection = uiApp.ActiveUIDocument.Selection;
-            pickedref = selection.PickObject(Autodesk.Revit.UI.Selection.ObjectType.Element, "Please select a group");
-            var element = doc.GetElement(pickedref);
-            var box = element.get_Geometry(new Options());
-            Group group = element as Group;
-            MessageBox.Show($"Element ID:{element.Id}\nElement name: {element.Name}\nGeometry: {box.GetBoundingBox().Max}");*/
-
+            MessageBox.Show(result.ToString());
+            transaction.RollBack();
             return Result.Succeeded;
         }
         public XYZ GetElementCenter(Element elem)

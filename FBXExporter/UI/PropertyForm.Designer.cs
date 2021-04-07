@@ -43,6 +43,7 @@ namespace FBXExporter.UI
             this.ChangePathButton = new System.Windows.Forms.Button();
             this.CloseButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.TestButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -122,6 +123,7 @@ namespace FBXExporter.UI
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.TestButton);
             this.panel1.Controls.Add(this.Id);
             this.panel1.Controls.Add(this.RevitNameValue);
             this.panel1.Controls.Add(this.ElementIdValue);
@@ -151,10 +153,9 @@ namespace FBXExporter.UI
             this.FilePath.Location = new System.Drawing.Point(7, 194);
             this.FilePath.MaximumSize = new System.Drawing.Size(345, 20);
             this.FilePath.Name = "FilePath";
-            this.FilePath.Size = new System.Drawing.Size(343, 20);
+            this.FilePath.Size = new System.Drawing.Size(127, 16);
             this.FilePath.TabIndex = 11;
-            this.FilePath.Text = "Choose FileChoose FileChoose FileChoose FileChoose FileChoose FileChoose FileChoo" +
-    "se FileChoose FileChoose FileChoose File";
+            this.FilePath.Text = "Choose FileChoose";
             // 
             // ChangePathButton
             // 
@@ -189,8 +190,19 @@ namespace FBXExporter.UI
             this.panel3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel3_MouseDown);
             this.panel3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel3_MouseMove);
             // 
+            // TestButton
+            // 
+            this.TestButton.Location = new System.Drawing.Point(349, 17);
+            this.TestButton.Name = "TestButton";
+            this.TestButton.Size = new System.Drawing.Size(75, 23);
+            this.TestButton.TabIndex = 15;
+            this.TestButton.Text = "Test";
+            this.TestButton.UseVisualStyleBackColor = true;
+            this.TestButton.Click += new System.EventHandler(this.TestButton_Click);
+            // 
             // PropertyForm
             // 
+            this.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(436, 222);
@@ -200,6 +212,7 @@ namespace FBXExporter.UI
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "PropertyForm";
             this.Text = "Element Data";
             this.TopMost = true;
@@ -229,5 +242,6 @@ namespace FBXExporter.UI
         private System.Windows.Forms.Button ChangePathButton;
         private System.Windows.Forms.Button CloseButton;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button TestButton;
     }
 }
