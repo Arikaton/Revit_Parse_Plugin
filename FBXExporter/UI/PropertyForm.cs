@@ -76,9 +76,5 @@ namespace FBXExporter.UI
         {
             formPointBeforeMove = e.Location;
         }
-
-        private void TestButton_Click(object sender, System.EventArgs e)
-        {
-        }
     }
 }

@@ -1,7 +1,4 @@
-﻿using FBXExporter.Contracts;
-using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 
 namespace FBXExporter.Entity
 {

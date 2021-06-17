@@ -1,0 +1,55 @@
+﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Autodesk.Windows;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+
+namespace FBXExporter.Entity
+{
+    public class Hierarchy
+    {
+        public Action<ICollection<ElementId>> OnSelectionChange;
+
+        private UIApplication _uiapp;
+        private bool _subscribed;
+
+        public Hierarchy(UIApplication uiapp)
+        {
+            _uiapp = uiapp;
+        }
+
+        private void PanelEvent(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            Debug.Assert(sender is RibbonTab,
+              "expected sender to be a ribbon tab");
+
+            var activeUI = _uiapp.ActiveUIDocument;
+
+            if (e.PropertyName != "Title") return;
+
+            var ids = activeUI.Selection.GetElementIds();
+            if (ids.Count == 0) return;
+            OnSelectionChange?.Invoke(ids);
+        }
+
+        private void UnSubscribe()
+        {
+            foreach (var tab in ComponentManager.Ribbon.Tabs.Where(tab => tab.Id == "Modify"))
+            {
+                tab.PropertyChanged -= PanelEvent;
+                _subscribed = false;
+            }
+        }
+
+        private void Subscribe()
+        {
+            foreach (var tab in ComponentManager.Ribbon.Tabs.Where(tab => tab.Id == "Modify"))
+            {
+                tab.PropertyChanged += PanelEvent;
+                _subscribed = true;
+            }
+        }
+    }
+}
