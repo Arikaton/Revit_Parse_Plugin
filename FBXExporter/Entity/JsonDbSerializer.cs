@@ -24,7 +24,8 @@ namespace FBXExporter.Entity
                 return new JsonDb(new Dictionary<string, ElementData>(), new Dictionary<string, string>());
             }
             var json = File.ReadAllText(path);
-            return JsonConvert.DeserializeObject<JsonDb>(json);
+            var jsonDb = JsonConvert.DeserializeObject<JsonDb>(json);
+            return jsonDb ?? new JsonDb(new Dictionary<string, ElementData>(), new Dictionary<string, string>());
         }
     }
 }
