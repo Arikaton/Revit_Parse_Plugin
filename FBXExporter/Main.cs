@@ -28,8 +28,15 @@ namespace FBXExporter
                 assemblyLocation,
                 "FBXExporter.ExportCommand");*/
 
+            var hierarchyButtonData = new PushButtonData(
+                "Hierarchy",
+                "Show Hierarchy",
+                assemblyLocation,
+                "FBXExporter.Commands.CmdOpenHierarchy");
+
             var pannelAnnotation = application.CreateRibbonPanel(exporterTabName, "FBXExporter");
             var propertyButton = pannelAnnotation.AddItem(propertyButtonData) as PushButton;
+            var hierarchyButton = pannelAnnotation.AddItem(hierarchyButtonData) as PushButton;
             propertyButton.LargeImage = Resources.property_icon.ToBitmapImage();
             return Result.Succeeded;
         }

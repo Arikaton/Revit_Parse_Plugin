@@ -43,7 +43,6 @@ namespace FBXExporter.UI
             this.ChangePathButton = new System.Windows.Forms.Button();
             this.CloseButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.TestButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -123,7 +122,6 @@ namespace FBXExporter.UI
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.TestButton);
             this.panel1.Controls.Add(this.Id);
             this.panel1.Controls.Add(this.RevitNameValue);
             this.panel1.Controls.Add(this.ElementIdValue);
@@ -190,16 +188,6 @@ namespace FBXExporter.UI
             this.panel3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel3_MouseDown);
             this.panel3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel3_MouseMove);
             // 
-            // TestButton
-            // 
-            this.TestButton.Location = new System.Drawing.Point(349, 17);
-            this.TestButton.Name = "TestButton";
-            this.TestButton.Size = new System.Drawing.Size(75, 23);
-            this.TestButton.TabIndex = 15;
-            this.TestButton.Text = "Test";
-            this.TestButton.UseVisualStyleBackColor = true;
-            this.TestButton.Click += new System.EventHandler(this.TestButton_Click);
-            // 
             // PropertyForm
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
@@ -242,6 +230,5 @@ namespace FBXExporter.UI
         private System.Windows.Forms.Button ChangePathButton;
         private System.Windows.Forms.Button CloseButton;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button TestButton;
     }
 }

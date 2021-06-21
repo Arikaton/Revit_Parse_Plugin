@@ -9,7 +9,7 @@ namespace FBXExporter
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
-    public class ExportCommand : IExternalCommand
+    public class TestCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {

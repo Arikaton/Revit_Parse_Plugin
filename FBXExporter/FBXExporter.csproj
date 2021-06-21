@@ -52,17 +52,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AdWindows">
-      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2020\AdWindows.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\AdWindows.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
-    <Reference Include="RevitAPI, Version=20.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
+    <Reference Include="RevitAPI">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="RevitAPIUI, Version=20.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
+    <Reference Include="RevitAPIUI">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -86,16 +86,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CmdOpenHierarchy.cs" />
+    <Compile Include="Entity\Hierarchy.cs" />
+    <Compile Include="Entity\RenameTool.cs" />
+    <Compile Include="Presenters\HierarchyPresenter.cs" />
     <Compile Include="Entity\JsonDbSerializer.cs" />
+    <Compile Include="Presenters\RenameToolPresenter.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\HierarchyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\HierarchyForm.Designer.cs">
+      <DependentUpon>HierarchyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\RenameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\RenameForm.Designer.cs">
+      <DependentUpon>RenameForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\BitmapExtension.cs" />
     <Compile Include="Commands\CmdSelectionChanged.cs" />
-    <Compile Include="Commands\ExportCommand.cs" />
-    <Compile Include="Contracts\IElementDatabase.cs" />
+    <Compile Include="Commands\TestCommand.cs" />
     <Compile Include="Entity\JsonDb.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Entity\PropertiesController.cs" />
@@ -112,6 +128,8 @@
     <Compile Include="UI\PropertyForm.Designer.cs">
       <DependentUpon>PropertyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\IHierarchyView.cs" />
+    <Compile Include="Views\IRenameToolView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -127,8 +145,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\HierarchyForm.resx">
+      <DependentUpon>HierarchyForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\PropertyForm.resx">
       <DependentUpon>PropertyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\RenameForm.resx">
+      <DependentUpon>RenameForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
