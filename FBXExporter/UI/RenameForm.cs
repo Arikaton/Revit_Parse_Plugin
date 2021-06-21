@@ -17,11 +17,15 @@ namespace FBXExporter.UI
 
         public bool UseNumber => useNumberCheckBox.Checked;
 
+        public bool UseParentName => useParentNameCheckBox.Checked;
+
         public string BaseName => baseNameTextBox.Text;
 
         public string Prefix => prefixTextBox.Text;
 
         public string Suffix => suffixTextBox.Text;
+
+        public string ParentName => parentNameTextBox.Text;
 
         public uint StartNumber => (uint) startNumberBox.Value;
 

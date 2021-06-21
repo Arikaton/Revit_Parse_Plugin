@@ -26,12 +26,14 @@ namespace FBXExporter.Presenters
                 _renameTool.Suffix = _view.Suffix;
                 _renameTool.Prefix = _view.Prefix;
                 _renameTool.StartNumber = _view.StartNumber;
+                _renameTool.ParentName = _view.ParentName;
 
                 renamedElements = _renameTool.Rename(
                     _view.UseBaseName,
                     _view.UseSuffix,
                     _view.UsePrefix,
-                    _view.UseNumber);
+                    _view.UseNumber,
+                    _view.UseParentName); ;
             }
             return renamedElements;
         }

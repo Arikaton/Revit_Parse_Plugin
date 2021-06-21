@@ -9,6 +9,7 @@ namespace FBXExporter.Entity
         public string BaseName { get; set; }
         public string Suffix { get; set; }
         public string Prefix { get; set; }
+        public string ParentName { get; set; }
         public uint StartNumber { get; set; }
 
         public RenameTool(List<ElementData> elements)
@@ -16,12 +17,16 @@ namespace FBXExporter.Entity
             _elements = elements;
         }
 
-        public List<ElementData> Rename(bool useBaseName, bool useSuffix, bool usePrefix, bool useNumbers)
+        public List<ElementData> Rename(bool useBaseName, bool useSuffix, bool usePrefix, bool useNumbers, bool useParentName)
         {
             var counter = StartNumber;
 
             foreach (var element in _elements)
             {
+                if(useParentName && !string.IsNullOrWhiteSpace(ParentName))
+                {
+                    element.ParentName = ParentName;
+                }
                 if(useBaseName && !string.IsNullOrWhiteSpace(BaseName))
                 {
                     element.Name = BaseName;

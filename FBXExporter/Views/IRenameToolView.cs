@@ -12,12 +12,14 @@ namespace FBXExporter.Views
         bool UsePrefix { get; }
         bool UseSuffix { get; }
         bool UseNumber { get; }
+        bool UseParentName { get; }
 
         string BaseName { get; }
         string Prefix { get; }
         string Suffix { get; }
+        string ParentName { get; }
         uint StartNumber { get; }
 
-        DialogResult ShowDialog();
+        DialogResult ShowDialog(); 
     }
 }
