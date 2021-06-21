@@ -3,6 +3,7 @@ using Autodesk.Revit.DB;
 using FBXExporter.Views;
 using FBXExporter.Entity;
 using FBXExporter.UI;
+using System.Windows.Forms;
 
 namespace FBXExporter.Presenters
 {
@@ -28,6 +29,7 @@ namespace FBXExporter.Presenters
         {
             var elements = _hierarchy.GetAllElements();
             _view.UpdateElements(elements);
+            _view.DatabasePath = _hierarchy.DatabasePath;
         }
 
         private void Subscribe()
@@ -36,6 +38,7 @@ namespace FBXExporter.Presenters
             _view.OnEditElements += EditElementsHandler;
             _view.OnClose += CloseHandler;
             _view.OnRenameButton += RenameButtonHandler;
+            _view.OnChangePath += ChangeDatabasePathHandler;
 
             _hierarchy.OnSelectionChange += RevitSelectionChangedHandler;
         }
@@ -45,6 +48,8 @@ namespace FBXExporter.Presenters
             _view.OnSelectionChanged -= FormSelectionChangedHandler;
             _view.OnEditElements -= EditElementsHandler;
             _view.OnClose -= CloseHandler;
+            _view.OnRenameButton -= RenameButtonHandler;
+            _view.OnChangePath -= ChangeDatabasePathHandler;
 
             _hierarchy.OnSelectionChange -= RevitSelectionChangedHandler;
         }
@@ -83,6 +88,23 @@ namespace FBXExporter.Presenters
         private void EditElementsHandler(List<ElementData> elements)
         {
             _hierarchy.SaveElements(elements);
+        }
+
+        private void ChangeDatabasePathHandler()
+        {
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Json|*.json";
+            saveFileDialog.Title = "Save a json database";
+            var dialogResult = saveFileDialog.ShowDialog();
+
+            if (dialogResult == DialogResult.Cancel)
+                return;
+
+            if (saveFileDialog.FileName != "")
+            {
+                _hierarchy.ChangeDatabasePath(saveFileDialog.FileName);
+                LoadAllElements();
+            }
         }
     }
 }

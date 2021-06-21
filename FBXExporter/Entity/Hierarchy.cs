@@ -18,6 +18,8 @@ namespace FBXExporter.Entity
         private string dbPath;
         private bool _subscribed;
 
+        public string DatabasePath => dbPath;
+
         public Hierarchy(UIApplication uiapp)
         {
             _uiapp = uiapp;
@@ -90,6 +92,12 @@ namespace FBXExporter.Entity
             SaveDatabase();
         }
 
+        public void ChangeDatabasePath(string newPath)
+        {
+            dbPath = newPath;
+            jsonDb = JsonDbSerializer.Deserialize(newPath);
+        }
+
         private void SaveDatabase()
         {
             JsonDbSerializer.Serialize(jsonDb, dbPath);
@@ -103,7 +111,8 @@ namespace FBXExporter.Entity
 
         private void Initialize()
         {
-            dbPath = Directory.GetCurrentDirectory() + "\\DefaultDatabase.json";
+            var myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            dbPath = myDocumentsPath + "\\DefaultDatabase.json";         
             jsonDb = JsonDbSerializer.Deserialize(dbPath);
         }
 

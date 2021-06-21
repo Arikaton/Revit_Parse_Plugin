@@ -16,11 +16,6 @@ namespace FBXExporter
             var exporterTabName = "FBXExporter";
             application.CreateRibbonTab(exporterTabName);
             var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-            var propertyButtonData = new PushButtonData(
-                "Property button",
-                "Show Properties",
-                assemblyLocation,
-                "FBXExporter.CmdSelectionChanged");
 
             /*var deletePushButton = new PushButtonData(
                 "GetIds button",
@@ -35,9 +30,8 @@ namespace FBXExporter
                 "FBXExporter.Commands.CmdOpenHierarchy");
 
             var pannelAnnotation = application.CreateRibbonPanel(exporterTabName, "FBXExporter");
-            var propertyButton = pannelAnnotation.AddItem(propertyButtonData) as PushButton;
             var hierarchyButton = pannelAnnotation.AddItem(hierarchyButtonData) as PushButton;
-            propertyButton.LargeImage = Resources.property_icon.ToBitmapImage();
+            hierarchyButton.LargeImage = Resources.property_icon.ToBitmapImage();
             return Result.Succeeded;
         }
 

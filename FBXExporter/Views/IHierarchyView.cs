@@ -10,6 +10,8 @@ namespace FBXExporter.Views
         event Action<List<string>> OnSelectionChanged;
         event Action<List<ElementData>> OnEditElements;
         event Action OnClose;
+        event Action OnChangePath;
+        string DatabasePath { set; }
         void Show();
         void Close();
         void UpdateElements(List<ElementData> elements);

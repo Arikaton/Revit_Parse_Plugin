@@ -12,6 +12,9 @@ namespace FBXExporter.UI
         public event Action<List<string>> OnSelectionChanged;
         public event Action<List<ElementData>> OnEditElements;
         public event Action OnClose;
+        public event Action OnChangePath;
+
+        public string DatabasePath { set => databaseNameTextBox.Text = value; }
 
         public HierarchyForm()
         {
@@ -105,6 +108,11 @@ namespace FBXExporter.UI
         private string GetCellValue(DataGridViewCell cell)
         {
             return cell.Value != null ? cell.Value.ToString() : "";
+        }
+
+        private void changePathButton_Click(object sender, EventArgs e)
+        {
+            OnChangePath?.Invoke();
         }
     }
 }

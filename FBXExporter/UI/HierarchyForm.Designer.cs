@@ -30,11 +30,13 @@ namespace FBXExporter.UI
         private void InitializeComponent()
         {
             this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.renameButton = new System.Windows.Forms.Button();
             this.RevitNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ParentColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.renameButton = new System.Windows.Forms.Button();
+            this.databaseNameTextBox = new System.Windows.Forms.TextBox();
+            this.changePathButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,26 +54,16 @@ namespace FBXExporter.UI
             this.IdColumn,
             this.NameColumn,
             this.ParentColumn});
-            this.dataGrid.Location = new System.Drawing.Point(17, 24);
+            this.dataGrid.Location = new System.Drawing.Point(13, 20);
+            this.dataGrid.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGrid.Name = "dataGrid";
             this.dataGrid.RowHeadersWidth = 51;
             this.dataGrid.RowTemplate.Height = 24;
             this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGrid.Size = new System.Drawing.Size(653, 375);
+            this.dataGrid.Size = new System.Drawing.Size(562, 284);
             this.dataGrid.TabIndex = 0;
             this.dataGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellValueChanged);
             this.dataGrid.SelectionChanged += new System.EventHandler(this.dataGrid_SelectionChanged);
-            // 
-            // renameButton
-            // 
-            this.renameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.renameButton.Location = new System.Drawing.Point(517, 405);
-            this.renameButton.Name = "renameButton";
-            this.renameButton.Size = new System.Drawing.Size(153, 36);
-            this.renameButton.TabIndex = 1;
-            this.renameButton.Text = "Переименовать";
-            this.renameButton.UseVisualStyleBackColor = true;
-            this.renameButton.Click += new System.EventHandler(this.renameButton_Click);
             // 
             // RevitNameColumn
             // 
@@ -103,16 +95,52 @@ namespace FBXExporter.UI
             this.ParentColumn.MinimumWidth = 120;
             this.ParentColumn.Name = "ParentColumn";
             // 
+            // renameButton
+            // 
+            this.renameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.renameButton.Location = new System.Drawing.Point(468, 321);
+            this.renameButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.renameButton.Name = "renameButton";
+            this.renameButton.Size = new System.Drawing.Size(107, 29);
+            this.renameButton.TabIndex = 1;
+            this.renameButton.Text = "Переименовать";
+            this.renameButton.UseVisualStyleBackColor = true;
+            this.renameButton.Click += new System.EventHandler(this.renameButton_Click);
+            // 
+            // databaseNameTextBox
+            // 
+            this.databaseNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.databaseNameTextBox.Location = new System.Drawing.Point(12, 308);
+            this.databaseNameTextBox.Multiline = true;
+            this.databaseNameTextBox.Name = "databaseNameTextBox";
+            this.databaseNameTextBox.ReadOnly = true;
+            this.databaseNameTextBox.Size = new System.Drawing.Size(344, 41);
+            this.databaseNameTextBox.TabIndex = 2;
+            // 
+            // changePathButton
+            // 
+            this.changePathButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.changePathButton.Location = new System.Drawing.Point(367, 321);
+            this.changePathButton.Name = "changePathButton";
+            this.changePathButton.Size = new System.Drawing.Size(83, 29);
+            this.changePathButton.TabIndex = 3;
+            this.changePathButton.Text = "Изменить";
+            this.changePathButton.UseVisualStyleBackColor = true;
+            this.changePathButton.Click += new System.EventHandler(this.changePathButton_Click);
+            // 
             // HierarchyForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(682, 453);
+            this.ClientSize = new System.Drawing.Size(584, 361);
+            this.Controls.Add(this.changePathButton);
+            this.Controls.Add(this.databaseNameTextBox);
             this.Controls.Add(this.renameButton);
             this.Controls.Add(this.dataGrid);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(400, 200);
+            this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "HierarchyForm";
             this.ShowIcon = false;
             this.Text = "Иерархия";
@@ -120,6 +148,7 @@ namespace FBXExporter.UI
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HierarchyForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -131,5 +160,7 @@ namespace FBXExporter.UI
         private System.Windows.Forms.DataGridViewTextBoxColumn IdColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ParentColumn;
+        private System.Windows.Forms.TextBox databaseNameTextBox;
+        private System.Windows.Forms.Button changePathButton;
     }
 }
