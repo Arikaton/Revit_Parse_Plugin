@@ -1,4 +1,6 @@
-﻿namespace FBXExporter.Entity
+﻿using System.Collections.Generic;
+
+namespace FBXExporter.Entity
 {
     [Newtonsoft.Json.JsonObject]
     public class ElementData
@@ -8,6 +10,7 @@
         public string Name;
         public string ParentName;
         public string GroupName;
+        public List<ElementData> Elements = new List<ElementData>();
 
         [Newtonsoft.Json.JsonConstructor]
         public ElementData(string id, string revitName, string name, string parentName, string groupName = null)

@@ -59,6 +59,24 @@ namespace FBXExporter.Entity
             return allElements;
         }
 
+        public List<ElementData> GetAllElementsHierarcy()
+        {
+
+            var elData1 = new ElementData("id1", "element1");
+            elData1.Elements.Add(new ElementData("id1.1", "element1.1") { ParentName = "id1" });
+            elData1.Elements[0].Elements.Add(new ElementData("id1.1.1", "element1.1.1") { ParentName = "id1.1" });
+
+            var elData2 = new ElementData("id2", "element2");
+            elData2.Elements.Add(new ElementData("id2.2", "element2.2") { ParentName = "id2" });
+            elData2.Elements[0].Elements.Add(new ElementData("id2.2.2", "element2.2.2") { ParentName = "id2.2" });
+
+            var db = new JsonDb(new Dictionary<string, ElementData>(), new Dictionary<string, string>());
+
+            db.ElementsList.Add(elData1);
+            db.ElementsList.Add(elData2);
+            return db.ElementsList;
+        }
+
         public void SelectElements(List<string> ids)
         {
             List<ElementId> idsToSelect = new List<ElementId>();

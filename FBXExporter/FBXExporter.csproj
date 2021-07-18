@@ -89,6 +89,7 @@
     <Compile Include="Commands\CmdOpenHierarchy.cs" />
     <Compile Include="Entity\Hierarchy.cs" />
     <Compile Include="Entity\RenameTool.cs" />
+    <Compile Include="Entity\TreeNodeWithID.cs" />
     <Compile Include="Presenters\HierarchyPresenter.cs" />
     <Compile Include="Entity\JsonDbSerializer.cs" />
     <Compile Include="Presenters\RenameToolPresenter.cs" />
@@ -130,6 +131,7 @@
     </Compile>
     <Compile Include="Views\IHierarchyView.cs" />
     <Compile Include="Views\IRenameToolView.cs" />
+    <Compile Include="Views\ITreeHierarcyView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -29,6 +29,9 @@ namespace FBXExporter.Presenters
         {
             var elements = _hierarchy.GetAllElements();
             _view.UpdateElements(elements);
+
+            _view.UpdateHierarcy(elements);
+
             _view.DatabasePath = _hierarchy.DatabasePath;
         }
 

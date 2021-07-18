@@ -15,6 +15,7 @@ namespace FBXExporter.Views
         void Show();
         void Close();
         void UpdateElements(List<ElementData> elements);
-        void SelectElements(List<string> id);        
+        void SelectElements(List<string> id);
+        void UpdateHierarcy(List<ElementData> elements);
     }
 }

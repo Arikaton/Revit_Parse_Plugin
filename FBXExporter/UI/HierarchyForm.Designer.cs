@@ -29,6 +29,16 @@ namespace FBXExporter.UI
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Узел1");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Узел2");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Узел0", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Узел4");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Узел5");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Узел3", new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode5});
             this.dataGrid = new System.Windows.Forms.DataGridView();
             this.RevitNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -37,6 +47,7 @@ namespace FBXExporter.UI
             this.renameButton = new System.Windows.Forms.Button();
             this.databaseNameTextBox = new System.Windows.Forms.TextBox();
             this.changePathButton = new System.Windows.Forms.Button();
+            this.treeView = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,13 +65,13 @@ namespace FBXExporter.UI
             this.IdColumn,
             this.NameColumn,
             this.ParentColumn});
-            this.dataGrid.Location = new System.Drawing.Point(13, 20);
-            this.dataGrid.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGrid.Location = new System.Drawing.Point(17, 25);
+            this.dataGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGrid.Name = "dataGrid";
             this.dataGrid.RowHeadersWidth = 51;
             this.dataGrid.RowTemplate.Height = 24;
             this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGrid.Size = new System.Drawing.Size(562, 284);
+            this.dataGrid.Size = new System.Drawing.Size(749, 153);
             this.dataGrid.TabIndex = 0;
             this.dataGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellValueChanged);
             this.dataGrid.SelectionChanged += new System.EventHandler(this.dataGrid_SelectionChanged);
@@ -98,10 +109,10 @@ namespace FBXExporter.UI
             // renameButton
             // 
             this.renameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.renameButton.Location = new System.Drawing.Point(468, 321);
-            this.renameButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.renameButton.Location = new System.Drawing.Point(624, 650);
+            this.renameButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.renameButton.Name = "renameButton";
-            this.renameButton.Size = new System.Drawing.Size(107, 29);
+            this.renameButton.Size = new System.Drawing.Size(143, 36);
             this.renameButton.TabIndex = 1;
             this.renameButton.Text = "Переименовать";
             this.renameButton.UseVisualStyleBackColor = true;
@@ -110,37 +121,62 @@ namespace FBXExporter.UI
             // databaseNameTextBox
             // 
             this.databaseNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.databaseNameTextBox.Location = new System.Drawing.Point(12, 308);
+            this.databaseNameTextBox.Location = new System.Drawing.Point(16, 634);
+            this.databaseNameTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.databaseNameTextBox.Multiline = true;
             this.databaseNameTextBox.Name = "databaseNameTextBox";
             this.databaseNameTextBox.ReadOnly = true;
-            this.databaseNameTextBox.Size = new System.Drawing.Size(344, 41);
+            this.databaseNameTextBox.Size = new System.Drawing.Size(457, 50);
             this.databaseNameTextBox.TabIndex = 2;
             // 
             // changePathButton
             // 
             this.changePathButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.changePathButton.Location = new System.Drawing.Point(367, 321);
+            this.changePathButton.Location = new System.Drawing.Point(489, 650);
+            this.changePathButton.Margin = new System.Windows.Forms.Padding(4);
             this.changePathButton.Name = "changePathButton";
-            this.changePathButton.Size = new System.Drawing.Size(83, 29);
+            this.changePathButton.Size = new System.Drawing.Size(111, 36);
             this.changePathButton.TabIndex = 3;
             this.changePathButton.Text = "Изменить";
             this.changePathButton.UseVisualStyleBackColor = true;
             this.changePathButton.Click += new System.EventHandler(this.changePathButton_Click);
             // 
+            // treeView
+            // 
+            this.treeView.Location = new System.Drawing.Point(206, 253);
+            this.treeView.Name = "treeView";
+            treeNode1.Name = "Узел1";
+            treeNode1.Text = "Узел1";
+            treeNode2.Name = "Узел2";
+            treeNode2.Text = "Узел2";
+            treeNode3.Name = "Узел0";
+            treeNode3.Text = "Узел0";
+            treeNode4.Name = "Узел4";
+            treeNode4.Text = "Узел4";
+            treeNode5.Name = "Узел5";
+            treeNode5.Text = "Узел5";
+            treeNode6.Name = "Узел3";
+            treeNode6.Text = "Узел3";
+            this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode3,
+            treeNode6});
+            this.treeView.Size = new System.Drawing.Size(435, 299);
+            this.treeView.TabIndex = 4;
+            // 
             // HierarchyForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 361);
+            this.ClientSize = new System.Drawing.Size(779, 699);
+            this.Controls.Add(this.treeView);
             this.Controls.Add(this.changePathButton);
             this.Controls.Add(this.databaseNameTextBox);
             this.Controls.Add(this.renameButton);
             this.Controls.Add(this.dataGrid);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(600, 400);
+            this.MinimumSize = new System.Drawing.Size(794, 481);
             this.Name = "HierarchyForm";
             this.ShowIcon = false;
             this.Text = "Иерархия";
@@ -162,5 +198,6 @@ namespace FBXExporter.UI
         private System.Windows.Forms.DataGridViewTextBoxColumn ParentColumn;
         private System.Windows.Forms.TextBox databaseNameTextBox;
         private System.Windows.Forms.Button changePathButton;
+        private System.Windows.Forms.TreeView treeView;
     }
 }
