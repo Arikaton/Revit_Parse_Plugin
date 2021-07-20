@@ -57,6 +57,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
       <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
       <Private>False</Private>
@@ -80,16 +81,20 @@
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsBase_Core.STW.4.0.30319.1\lib\net40\WindowsBase.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CmdOpenHierarchy.cs" />
+    <Compile Include="Entity\ElementDataNode.cs" />
     <Compile Include="Entity\Hierarchy.cs" />
     <Compile Include="Entity\RenameTool.cs" />
-    <Compile Include="Entity\TreeNodeWithID.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Presenters\HierarchyPresenter.cs" />
     <Compile Include="Entity\JsonDbSerializer.cs" />
     <Compile Include="Presenters\RenameToolPresenter.cs" />
@@ -131,7 +136,6 @@
     </Compile>
     <Compile Include="Views\IHierarchyView.cs" />
     <Compile Include="Views\IRenameToolView.cs" />
-    <Compile Include="Views\ITreeHierarcyView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

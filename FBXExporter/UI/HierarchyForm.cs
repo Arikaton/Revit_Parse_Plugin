@@ -4,31 +4,35 @@ using System.Drawing;
 using System.Windows.Forms;
 using FBXExporter.Entity;
 using FBXExporter.Views;
+using FBXExporter.Extensions;
 
 namespace FBXExporter.UI
 {
     public partial class HierarchyForm : Form, IHierarchyView
     {
-        public event Action<List<ElementData>> OnRenameButton;
+        public event Action<List<string>> OnRenameButton;
         public event Action<List<string>> OnSelectionChanged;
         public event Action<List<ElementData>> OnEditElements;
         public event Action OnClose;
         public event Action OnChangePath;
+        public event Action<string, string> OnMoveElement;
+        public event Action<string> OnMoveElementToRoot;
 
         public string DatabasePath { set => databaseNameTextBox.Text = value; }
 
         public HierarchyForm()
         {
             InitializeComponent();
+            treeView.CheckBoxes = true;
         }
 
         public void UpdateElements(List<ElementData> elements)
         {
-            dataGrid.Rows.Clear();
-            foreach (var element in elements)
-            {
-                dataGrid.Rows.Add(element.RevitName, element.Id, element.Name, element.ParentName);
-            }
+            //dataGrid.Rows.Clear();
+            //foreach (var element in elements)
+            //{
+            //    dataGrid.Rows.Add(element.RevitName, element.Id, element.Name, element.ParentName);
+            //}
         }
 
         public void SelectElements(List<string> ids)
@@ -37,6 +41,7 @@ namespace FBXExporter.UI
 
             // Prevent cyclic call of SelectionChanged events
             dataGrid.SelectionChanged -= dataGrid_SelectionChanged;
+            treeView.AfterCheck -= treeView_AfterCheck;
 
             dataGrid.ClearSelection();
             
@@ -49,6 +54,16 @@ namespace FBXExporter.UI
                 }
             }
 
+            
+            foreach (var node in treeView.Nodes.GetRecursively<ElementDataNode>(x => x.Nodes))
+            {
+                if (ids.Contains(node.Id))
+                    node.Checked = true;
+                else
+                    node.Checked = false;
+            }
+
+            treeView.AfterCheck += treeView_AfterCheck;
             dataGrid.SelectionChanged += dataGrid_SelectionChanged;
         }
 
@@ -59,12 +74,18 @@ namespace FBXExporter.UI
             {
                 treeView.Nodes.Add(CreateTreeNodeFromElementData(elementData));
             }
+
+            //dataGrid.Rows.Clear();
+            //foreach (var node in treeView.Nodes.GetRecursively<ElementDataNode>(x => x.Nodes))
+            //{
+            //    dataGrid.Rows.Add("RevitName", node.Id, "Name", "ParentName");
+            //}
         }
 
         private ElementDataNode CreateTreeNodeFromElementData(ElementData elementData)
         {
             var node = new ElementDataNode();
-            node.Text = elementData.Name;
+            node.Text = $"{ elementData.RevitName} | ID:{elementData.Id} | Name:{elementData.Name}" ;
             node.Id = elementData.Id;
             foreach (var child in elementData.Elements)
             {
@@ -111,17 +132,25 @@ namespace FBXExporter.UI
 
         private void renameButton_Click(object sender, EventArgs e)
         {
-            List<ElementData> elements = new List<ElementData>();
+            List<string> elements = new List<string>();
 
-            foreach (DataGridViewRow row in dataGrid.SelectedRows)
+            //foreach (DataGridViewRow row in dataGrid.SelectedRows)
+            //{
+            //    var elementData = new ElementData(
+            //        GetCellValue(row.Cells[IdColumn.Name]),
+            //        GetCellValue(row.Cells[RevitNameColumn.Name]),
+            //        GetCellValue(row.Cells[NameColumn.Name]),
+            //        GetCellValue(row.Cells[ParentColumn.Name]));
+
+            //    elements.Add(elementData);
+            //}
+
+            foreach (var node in treeView.Nodes.GetRecursively<ElementDataNode>(x=>x.Nodes))
             {
-                var elementData = new ElementData(
-                    GetCellValue(row.Cells[IdColumn.Name]),
-                    GetCellValue(row.Cells[RevitNameColumn.Name]),
-                    GetCellValue(row.Cells[NameColumn.Name]),
-                    GetCellValue(row.Cells[ParentColumn.Name]));
-
-                elements.Add(elementData);
+                if(node.Checked)
+                {
+                    elements.Add(node.Id);
+                }
             }
 
             OnRenameButton?.Invoke(elements);
@@ -141,11 +170,11 @@ namespace FBXExporter.UI
         {
             ElementDataNode NewNode;
 
-            if (e.Data.GetDataPresent("FBXExporter.ElementDataNode", false))
+            if (e.Data.GetDataPresent("FBXExporter.Entity.ElementDataNode", false))
             {
                 Point pt = ((TreeView)sender).PointToClient(new Point(e.X, e.Y));
                 ElementDataNode DestinationNode = (ElementDataNode)((TreeView)sender).GetNodeAt(pt);
-                NewNode = (ElementDataNode)e.Data.GetData("FBXExporter.ElementDataNode");
+                NewNode = (ElementDataNode)e.Data.GetData("FBXExporter.Entity.ElementDataNode");
 
                 if (DestinationNode == NewNode)
                 {
@@ -153,14 +182,23 @@ namespace FBXExporter.UI
                 }
                 if (DestinationNode == null)
                 {
-                    treeView.Nodes.Add((ElementDataNode)NewNode.Clone());
+                    var sourceId = NewNode.Id;
+                    var newNodeClone = (ElementDataNode)NewNode.Clone();
+                    newNodeClone.Id = NewNode.Id;
+                    treeView.Nodes.Add(newNodeClone);
                     NewNode.Remove();
+                    OnMoveElementToRoot?.Invoke(sourceId);
                 }
                 else if (DestinationNode.TreeView == NewNode.TreeView)
                 {
-                    DestinationNode.Nodes.Add((ElementDataNode)NewNode.Clone());
+                    var sourceId = NewNode.Id;
+                    var destinationId = DestinationNode.Id;
+                    var newNodeClone = (ElementDataNode)NewNode.Clone();
+                    newNodeClone.Id = NewNode.Id;
+                    DestinationNode.Nodes.Add(newNodeClone);
                     DestinationNode.Expand();
                     NewNode.Remove();
+                    OnMoveElement?.Invoke(sourceId, destinationId);
                 }
             }
         }
@@ -173,6 +211,24 @@ namespace FBXExporter.UI
         private void treeView_ItemDrag(object sender, ItemDragEventArgs e)
         {
             DoDragDrop(e.Item, DragDropEffects.Move);
+        }
+
+        private void treeView_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            List<string> elements = new List<string>();
+            foreach (var node in treeView.Nodes.GetRecursively<ElementDataNode>(x => x.Nodes))
+            {
+                if (node.Checked)
+                {
+                    elements.Add(node.Id);
+                }
+            }
+            if (elements.Count == 0) return;
+            OnSelectionChanged?.Invoke(elements);
+        }
+
+        private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
         }
     }
 }

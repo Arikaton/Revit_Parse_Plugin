@@ -42,8 +42,20 @@ namespace FBXExporter.Presenters
             _view.OnClose += CloseHandler;
             _view.OnRenameButton += RenameButtonHandler;
             _view.OnChangePath += ChangeDatabasePathHandler;
+            _view.OnMoveElement += MoveElementHandler;
+            _view.OnMoveElementToRoot += MoveElementToRootHandler;
 
             _hierarchy.OnSelectionChange += RevitSelectionChangedHandler;
+        }
+
+        private void MoveElementToRootHandler(string sourceId)
+        {
+            _hierarchy.MoveElementToRoot(sourceId);
+        }
+
+        private void MoveElementHandler(string sourceId, string targetId)
+        {
+            _hierarchy.MoveElement(sourceId, targetId);  
         }
 
         private void Unsubscribe()
@@ -53,6 +65,8 @@ namespace FBXExporter.Presenters
             _view.OnClose -= CloseHandler;
             _view.OnRenameButton -= RenameButtonHandler;
             _view.OnChangePath -= ChangeDatabasePathHandler;
+            _view.OnMoveElement -= MoveElementHandler;
+            _view.OnMoveElementToRoot -= MoveElementToRootHandler;
 
             _hierarchy.OnSelectionChange -= RevitSelectionChangedHandler;
         }
@@ -72,13 +86,18 @@ namespace FBXExporter.Presenters
             _view.SelectElements(ids);
         }
 
-        private void RenameButtonHandler(List<ElementData> elements)
+        private void RenameButtonHandler(List<string> elements)
         {
             if (elements.Count == 0) return;
-            var renameToolPresenter = new RenameToolPresenter(new RenameForm(), new RenameTool(elements));
+            var elementDataList = new List<ElementData>();
+            foreach (var elementId in elements)
+            {
+                elementDataList.Add(_hierarchy.GetElementData(elementId));
+            }
+            var renameToolPresenter = new RenameToolPresenter(new RenameForm(), new RenameTool(elementDataList));
             var result = renameToolPresenter.ShowDialog();
             if (result.Count == 0) return;
-            _hierarchy.SaveElements(elements);
+            _hierarchy.Save();
             LoadAllElements();
         }
 
@@ -90,7 +109,7 @@ namespace FBXExporter.Presenters
 
         private void EditElementsHandler(List<ElementData> elements)
         {
-            _hierarchy.SaveElements(elements);
+            //_hierarchy.SaveElements(elements);
         }
 
         private void ChangeDatabasePathHandler()

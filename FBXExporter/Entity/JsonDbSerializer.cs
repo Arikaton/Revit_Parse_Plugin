@@ -21,11 +21,11 @@ namespace FBXExporter.Entity
             if (!File.Exists(path))
             {
                 File.Create(path);
-                return new JsonDb(new Dictionary<string, ElementData>(), new Dictionary<string, string>());
+                return new JsonDb();
             }
             var json = File.ReadAllText(path);
             var jsonDb = JsonConvert.DeserializeObject<JsonDb>(json);
-            return jsonDb ?? new JsonDb(new Dictionary<string, ElementData>(), new Dictionary<string, string>());
+            return jsonDb ?? new JsonDb();
         }
     }
 }

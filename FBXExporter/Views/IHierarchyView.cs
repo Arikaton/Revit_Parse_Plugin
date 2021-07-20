@@ -6,11 +6,13 @@ namespace FBXExporter.Views
 {
     public interface IHierarchyView
     {
-        event Action<List<ElementData>> OnRenameButton;
+        event Action<List<string>> OnRenameButton;
         event Action<List<string>> OnSelectionChanged;
         event Action<List<ElementData>> OnEditElements;
         event Action OnClose;
         event Action OnChangePath;
+        event Action<string, string> OnMoveElement;
+        event Action<string> OnMoveElementToRoot;
         string DatabasePath { set; }
         void Show();
         void Close();

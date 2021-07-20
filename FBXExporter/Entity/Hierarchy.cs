@@ -31,12 +31,12 @@ namespace FBXExporter.Entity
 
         public void Close()
         {
+            SaveDatabase();
             UnSubscribe();
         }
 
         public List<ElementData> GetAllElements()
         {
-            var allElements = new List<ElementData>();
             var allElementsFromRevit = GetAllElementsFromRevit();
 
             foreach (var element in allElementsFromRevit)
@@ -44,37 +44,13 @@ namespace FBXExporter.Entity
                 // Skip group childs
                 if (element.GroupId.IntegerValue != -1) continue;
 
-                var elementID = element.Id.IntegerValue.ToString();              
-                var elementData = new ElementData(elementID, element.Name);
+                var elementID = element.Id.IntegerValue.ToString();
+                if (jsonDb.ContainsId(elementID)) continue;
 
-                if (jsonDb.Elements.ContainsKey(elementID))
-                {
-                    var savedElement = jsonDb.GetElementById(elementID);
-                    elementData.Name = savedElement.Name;
-                    elementData.ParentName = savedElement.ParentName;
-                    elementData.GroupName = savedElement.GroupName;
-                }
-                allElements.Add(elementData);
+                var newElement = new ElementData(elementID, element.Name);
+                jsonDb.AddNewElement(newElement);
             }
-            return allElements;
-        }
-
-        public List<ElementData> GetAllElementsHierarcy()
-        {
-
-            var elData1 = new ElementData("id1", "element1");
-            elData1.Elements.Add(new ElementData("id1.1", "element1.1") { ParentName = "id1" });
-            elData1.Elements[0].Elements.Add(new ElementData("id1.1.1", "element1.1.1") { ParentName = "id1.1" });
-
-            var elData2 = new ElementData("id2", "element2");
-            elData2.Elements.Add(new ElementData("id2.2", "element2.2") { ParentName = "id2" });
-            elData2.Elements[0].Elements.Add(new ElementData("id2.2.2", "element2.2.2") { ParentName = "id2.2" });
-
-            var db = new JsonDb(new Dictionary<string, ElementData>(), new Dictionary<string, string>());
-
-            db.ElementsList.Add(elData1);
-            db.ElementsList.Add(elData2);
-            return db.ElementsList;
+            return jsonDb.ElementsList;
         }
 
         public void SelectElements(List<string> ids)
@@ -89,31 +65,32 @@ namespace FBXExporter.Entity
             SelectElements(idsToSelect);
         }
 
-        public void SaveElement(ElementData element)
+        public void MoveElement(string sourceId, string targetId)
         {
-            if (element == null || string.IsNullOrEmpty(element.Id)) return;
-
-            jsonDb.AddElement(element.Id, element);
-
+            jsonDb.Move(sourceId, targetId);
             SaveDatabase();
         }
 
-        public void SaveElements(List<ElementData> elements)
+        public void MoveElementToRoot(string sourceId)
         {
-            foreach (var element in elements)
-            {
-                if (element == null || string.IsNullOrEmpty(element.Id)) continue;
-
-                jsonDb.AddElement(element.Id, element);
-            }
-
+            jsonDb.MoveToRoot(sourceId);
             SaveDatabase();
+        }
+
+        public ElementData GetElementData(string id)
+        {
+            return jsonDb.FindElement(id);
         }
 
         public void ChangeDatabasePath(string newPath)
         {
             dbPath = newPath;
             jsonDb = JsonDbSerializer.Deserialize(newPath);
+        }
+
+        public void Save()
+        {
+            SaveDatabase();
         }
 
         private void SaveDatabase()

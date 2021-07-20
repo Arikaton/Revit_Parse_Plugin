@@ -6,14 +6,14 @@ namespace FBXExporter.UI
 {
     public partial class PropertyForm : Form
     {
-        private PropertiesController controller;
+        //private PropertiesController controller;
         private Point formPointBeforeMove;
 
-        public PropertyForm(PropertiesController controller)
-        {
-            InitializeComponent();
-            this.controller = controller;
-        }
+        //public PropertyForm(PropertiesController controller)
+        //{
+        //    InitializeComponent();
+        //    this.controller = controller;
+        //}
 
         public void UpdateProperties(ElementData elementData, bool isGroup)
         {
@@ -49,7 +49,7 @@ namespace FBXExporter.UI
 
             if (saveFileDialog.FileName != "")
             {
-                controller.ChangeDatabasePath(saveFileDialog.FileName);
+                //controller.ChangeDatabasePath(saveFileDialog.FileName);
             }
         }
 
@@ -60,7 +60,7 @@ namespace FBXExporter.UI
 
         private void CloseButton_MouseClick(object sender, MouseEventArgs e)
         {
-            controller.CloseForm();
+            //controller.CloseForm();
         }
 
         private void panel3_MouseMove(object sender, MouseEventArgs e)

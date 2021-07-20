@@ -1,35 +1,35 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using FBXExporter.Extensions;
 
 namespace FBXExporter.Entity
 {
+    [System.Serializable]
     public class JsonDb
     {
-        public readonly Dictionary<string, ElementData> Elements;
         public Dictionary<string, string> Dictionary;
         public List<ElementData> ElementsList = new List<ElementData>();
 
-        public JsonDb(Dictionary<string, ElementData> elements, Dictionary<string, string> dictionary)
+        public void AddNewElement(ElementData elementData)
         {
-            Elements = elements;
-            Dictionary = dictionary;
+            ElementsList.Add(elementData);
         }
 
-        public void AddElement(string id, ElementData elementData)
-        {
-            if (Elements.ContainsKey(id))
-                Elements[id] = elementData;
-            else
-                Elements.Add(id, elementData);
-        }
+        //public ElementData GetElementById(string id)
+        //{
+            
+        //}
 
-        public ElementData GetElementById(string id)
+        public bool ContainsId(string id)
         {
-            if (Elements.ContainsKey(id))
-                return Elements[id];
-            return null;
+            foreach (var element in ElementsList.GetRecursively<ElementData>(x => x.Elements))
+            {
+                if (element.Id == id)
+                    return true;
+            }
+            return false;
         }
 
         public void Move(string sourceId, string targetId)
@@ -62,7 +62,7 @@ namespace FBXExporter.Entity
             }
         }
 
-        private ElementData FindElement(string id)
+        public ElementData FindElement(string id)
         {
             return ElementsList.GetRecursively<ElementData>(x => x.Elements).Where(x => x.Id == id).First();
         }
