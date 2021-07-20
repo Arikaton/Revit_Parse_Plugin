@@ -44,18 +44,9 @@ namespace FBXExporter.Presenters
             _view.OnChangePath += ChangeDatabasePathHandler;
             _view.OnMoveElement += MoveElementHandler;
             _view.OnMoveElementToRoot += MoveElementToRootHandler;
+            _view.OnEditElementName += OnEditElementNameHandler;
 
             _hierarchy.OnSelectionChange += RevitSelectionChangedHandler;
-        }
-
-        private void MoveElementToRootHandler(string sourceId)
-        {
-            _hierarchy.MoveElementToRoot(sourceId);
-        }
-
-        private void MoveElementHandler(string sourceId, string targetId)
-        {
-            _hierarchy.MoveElement(sourceId, targetId);  
         }
 
         private void Unsubscribe()
@@ -67,8 +58,26 @@ namespace FBXExporter.Presenters
             _view.OnChangePath -= ChangeDatabasePathHandler;
             _view.OnMoveElement -= MoveElementHandler;
             _view.OnMoveElementToRoot -= MoveElementToRootHandler;
+            _view.OnEditElementName -= OnEditElementNameHandler;
 
             _hierarchy.OnSelectionChange -= RevitSelectionChangedHandler;
+        }
+
+        private void OnEditElementNameHandler(string id, string newName)
+        {
+            _hierarchy.EditElementName(id, newName);
+            LoadAllElements();
+
+        }
+
+        private void MoveElementToRootHandler(string sourceId)
+        {
+            _hierarchy.MoveElementToRoot(sourceId);
+        }
+
+        private void MoveElementHandler(string sourceId, string targetId)
+        {
+            _hierarchy.MoveElement(sourceId, targetId);  
         }
 
         private void FormSelectionChangedHandler(List<string> ids)

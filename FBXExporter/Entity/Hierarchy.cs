@@ -65,6 +65,13 @@ namespace FBXExporter.Entity
             SelectElements(idsToSelect);
         }
 
+        internal void EditElementName(string id, string newName)
+        {
+            var elementData = GetElementData(id);
+            elementData.Name = newName;
+            SaveDatabase();
+        }
+
         public void MoveElement(string sourceId, string targetId)
         {
             jsonDb.Move(sourceId, targetId);

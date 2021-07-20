@@ -29,16 +29,16 @@ namespace FBXExporter.UI
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Узел1");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Узел2");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Узел0", new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode8});
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Узел4");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Узел5");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Узел3", new System.Windows.Forms.TreeNode[] {
-            treeNode10,
-            treeNode11});
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Узел1");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Узел2");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Узел0", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Узел4");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Узел5");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Узел3", new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode5});
             this.dataGrid = new System.Windows.Forms.DataGridView();
             this.RevitNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,6 +48,7 @@ namespace FBXExporter.UI
             this.databaseNameTextBox = new System.Windows.Forms.TextBox();
             this.changePathButton = new System.Windows.Forms.Button();
             this.treeView = new System.Windows.Forms.TreeView();
+            this.nameField = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -146,21 +147,21 @@ namespace FBXExporter.UI
             this.treeView.AllowDrop = true;
             this.treeView.Location = new System.Drawing.Point(16, 56);
             this.treeView.Name = "treeView";
-            treeNode7.Name = "Узел1";
-            treeNode7.Text = "Узел1";
-            treeNode8.Name = "Узел2";
-            treeNode8.Text = "Узел2";
-            treeNode9.Name = "Узел0";
-            treeNode9.Text = "Узел0";
-            treeNode10.Name = "Узел4";
-            treeNode10.Text = "Узел4";
-            treeNode11.Name = "Узел5";
-            treeNode11.Text = "Узел5";
-            treeNode12.Name = "Узел3";
-            treeNode12.Text = "Узел3";
+            treeNode1.Name = "Узел1";
+            treeNode1.Text = "Узел1";
+            treeNode2.Name = "Узел2";
+            treeNode2.Text = "Узел2";
+            treeNode3.Name = "Узел0";
+            treeNode3.Text = "Узел0";
+            treeNode4.Name = "Узел4";
+            treeNode4.Text = "Узел4";
+            treeNode5.Name = "Узел5";
+            treeNode5.Text = "Узел5";
+            treeNode6.Name = "Узел3";
+            treeNode6.Text = "Узел3";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode9,
-            treeNode12});
+            treeNode3,
+            treeNode6});
             this.treeView.Size = new System.Drawing.Size(477, 289);
             this.treeView.TabIndex = 4;
             this.treeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterCheck);
@@ -169,11 +170,20 @@ namespace FBXExporter.UI
             this.treeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView_DragDrop);
             this.treeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView_DragEnter);
             // 
+            // nameField
+            // 
+            this.nameField.Location = new System.Drawing.Point(515, 176);
+            this.nameField.Name = "nameField";
+            this.nameField.Size = new System.Drawing.Size(198, 22);
+            this.nameField.TabIndex = 5;
+            this.nameField.TextChanged += new System.EventHandler(this.nameField_TextChanged);
+            // 
             // HierarchyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(779, 496);
+            this.Controls.Add(this.nameField);
             this.Controls.Add(this.treeView);
             this.Controls.Add(this.changePathButton);
             this.Controls.Add(this.databaseNameTextBox);
@@ -205,5 +215,6 @@ namespace FBXExporter.UI
         private System.Windows.Forms.TextBox databaseNameTextBox;
         private System.Windows.Forms.Button changePathButton;
         private System.Windows.Forms.TreeView treeView;
+        private System.Windows.Forms.TextBox nameField;
     }
 }

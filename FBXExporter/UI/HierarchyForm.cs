@@ -17,8 +17,11 @@ namespace FBXExporter.UI
         public event Action OnChangePath;
         public event Action<string, string> OnMoveElement;
         public event Action<string> OnMoveElementToRoot;
+        public event Action<string, string> OnEditElementName;
 
         public string DatabasePath { set => databaseNameTextBox.Text = value; }
+
+        private ElementDataNode _selectedNode;
 
         public HierarchyForm()
         {
@@ -87,6 +90,7 @@ namespace FBXExporter.UI
             var node = new ElementDataNode();
             node.Text = $"{ elementData.RevitName} | ID:{elementData.Id} | Name:{elementData.Name}" ;
             node.Id = elementData.Id;
+            node.ElementName = elementData.Name;
             foreach (var child in elementData.Elements)
             {
                 node.Nodes.Add(CreateTreeNodeFromElementData(child));
@@ -183,9 +187,7 @@ namespace FBXExporter.UI
                 if (DestinationNode == null)
                 {
                     var sourceId = NewNode.Id;
-                    var newNodeClone = (ElementDataNode)NewNode.Clone();
-                    newNodeClone.Id = NewNode.Id;
-                    treeView.Nodes.Add(newNodeClone);
+                    treeView.Nodes.Add(NewNode.CloneNode());
                     NewNode.Remove();
                     OnMoveElementToRoot?.Invoke(sourceId);
                 }
@@ -193,9 +195,7 @@ namespace FBXExporter.UI
                 {
                     var sourceId = NewNode.Id;
                     var destinationId = DestinationNode.Id;
-                    var newNodeClone = (ElementDataNode)NewNode.Clone();
-                    newNodeClone.Id = NewNode.Id;
-                    DestinationNode.Nodes.Add(newNodeClone);
+                    DestinationNode.Nodes.Add(NewNode.CloneNode());
                     DestinationNode.Expand();
                     NewNode.Remove();
                     OnMoveElement?.Invoke(sourceId, destinationId);
@@ -229,6 +229,20 @@ namespace FBXExporter.UI
 
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            _selectedNode = (ElementDataNode)e.Node;
+            nameField.TextChanged -= nameField_TextChanged;
+            nameField.Text = _selectedNode.ElementName;
+            nameField.TextChanged += nameField_TextChanged;
+        }
+
+        private void nameField_TextChanged(object sender, EventArgs e)
+        {
+            if (_selectedNode == null) 
+            {
+                nameField.Text = "";
+                return;
+            }
+            OnEditElementName?.Invoke(_selectedNode.Id, nameField.Text);
         }
     }
 }
