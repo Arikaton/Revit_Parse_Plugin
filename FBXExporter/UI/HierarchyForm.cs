@@ -31,11 +31,6 @@ namespace FBXExporter.UI
 
         public void UpdateElements(List<ElementData> elements)
         {
-            //dataGrid.Rows.Clear();
-            //foreach (var element in elements)
-            //{
-            //    dataGrid.Rows.Add(element.RevitName, element.Id, element.Name, element.ParentName);
-            //}
         }
 
         public void SelectElements(List<string> ids)
@@ -43,21 +38,7 @@ namespace FBXExporter.UI
             if (ids.Count == 0) return;
 
             // Prevent cyclic call of SelectionChanged events
-            dataGrid.SelectionChanged -= dataGrid_SelectionChanged;
-            treeView.AfterCheck -= treeView_AfterCheck;
-
-            dataGrid.ClearSelection();
-            
-            foreach (DataGridViewRow row in dataGrid.Rows)
-            {
-                var rowID = (string)row.Cells[IdColumn.Name].Value;
-                if (ids.Contains(rowID))
-                {
-                    row.Selected = true;
-                }
-            }
-
-            
+            treeView.AfterCheck -= treeView_AfterCheck; 
             foreach (var node in treeView.Nodes.GetRecursively<ElementDataNode>(x => x.Nodes))
             {
                 if (ids.Contains(node.Id))
@@ -65,9 +46,7 @@ namespace FBXExporter.UI
                 else
                     node.Checked = false;
             }
-
             treeView.AfterCheck += treeView_AfterCheck;
-            dataGrid.SelectionChanged += dataGrid_SelectionChanged;
         }
 
         public void UpdateHierarcy(List<ElementData> elements)
@@ -77,18 +56,13 @@ namespace FBXExporter.UI
             {
                 treeView.Nodes.Add(CreateTreeNodeFromElementData(elementData));
             }
-
-            //dataGrid.Rows.Clear();
-            //foreach (var node in treeView.Nodes.GetRecursively<ElementDataNode>(x => x.Nodes))
-            //{
-            //    dataGrid.Rows.Add("RevitName", node.Id, "Name", "ParentName");
-            //}
         }
 
         private ElementDataNode CreateTreeNodeFromElementData(ElementData elementData)
         {
             var node = new ElementDataNode();
-            node.Text = $"{ elementData.RevitName} | ID:{elementData.Id} | Name:{elementData.Name}" ;
+            node.Text = $"{ elementData.RevitName} | ID:{elementData.Id} | " +
+                $"Name:{elementData.Name} | Group:{elementData.GroupName}";
             node.Id = elementData.Id;
             node.ElementName = elementData.Name;
             foreach (var child in elementData.Elements)
@@ -96,37 +70,6 @@ namespace FBXExporter.UI
                 node.Nodes.Add(CreateTreeNodeFromElementData(child));
             }
             return node;
-        }
-
-        private void dataGrid_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dataGrid.SelectedRows.Count == 0) return;
-            var selectedIds = new List<string>();
-            foreach (DataGridViewRow row in dataGrid.SelectedRows)
-            {
-                selectedIds.Add(row.Cells[IdColumn.Name].Value.ToString());
-            }
-            OnSelectionChanged?.Invoke(selectedIds);
-        }
-
-        private void dataGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            int columnIndex = e.ColumnIndex;
-            int rowIndex = e.RowIndex;
-            if (rowIndex < 0) return; 
-
-            var row = dataGrid.Rows[rowIndex];
-
-            var revitName = row.Cells[RevitNameColumn.Name].Value.ToString();
-            var elementID =  row.Cells[IdColumn.Name].Value.ToString();
-            var name = GetCellValue(row.Cells[NameColumn.Name]);
-            var parentName = GetCellValue(row.Cells[ParentColumn.Name]);
-
-            var editedElement = new ElementData(elementID, revitName, name, parentName);
-
-            var editedElements = new List<ElementData>() { editedElement };
-
-            OnEditElements?.Invoke(editedElements);
         }
 
         private void HierarchyForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -137,17 +80,6 @@ namespace FBXExporter.UI
         private void renameButton_Click(object sender, EventArgs e)
         {
             List<string> elements = new List<string>();
-
-            //foreach (DataGridViewRow row in dataGrid.SelectedRows)
-            //{
-            //    var elementData = new ElementData(
-            //        GetCellValue(row.Cells[IdColumn.Name]),
-            //        GetCellValue(row.Cells[RevitNameColumn.Name]),
-            //        GetCellValue(row.Cells[NameColumn.Name]),
-            //        GetCellValue(row.Cells[ParentColumn.Name]));
-
-            //    elements.Add(elementData);
-            //}
 
             foreach (var node in treeView.Nodes.GetRecursively<ElementDataNode>(x=>x.Nodes))
             {
@@ -160,9 +92,13 @@ namespace FBXExporter.UI
             OnRenameButton?.Invoke(elements);
         }
 
-        private string GetCellValue(DataGridViewCell cell)
+        private bool IsParent(ElementDataNode source, ElementDataNode target)
         {
-            return cell.Value != null ? cell.Value.ToString() : "";
+            foreach (ElementDataNode child in source.Nodes.GetRecursively<ElementDataNode>(x=>x.Nodes))
+            {
+                if (child.Id == target.Id) return true;
+            }
+            return false;
         }
 
         private void changePathButton_Click(object sender, EventArgs e)
@@ -181,6 +117,10 @@ namespace FBXExporter.UI
                 NewNode = (ElementDataNode)e.Data.GetData("FBXExporter.Entity.ElementDataNode");
 
                 if (DestinationNode == NewNode)
+                {
+                    return;
+                }
+                if(IsParent(NewNode, DestinationNode))
                 {
                     return;
                 }
@@ -215,7 +155,7 @@ namespace FBXExporter.UI
 
         private void treeView_AfterCheck(object sender, TreeViewEventArgs e)
         {
-            List<string> elements = new List<string>();
+            var elements = new List<string>();
             foreach (var node in treeView.Nodes.GetRecursively<ElementDataNode>(x => x.Nodes))
             {
                 if (node.Checked)
@@ -230,9 +170,14 @@ namespace FBXExporter.UI
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             _selectedNode = (ElementDataNode)e.Node;
+            idLabel.Text = $"ID:{_selectedNode.Id}";
             nameField.TextChanged -= nameField_TextChanged;
             nameField.Text = _selectedNode.ElementName;
             nameField.TextChanged += nameField_TextChanged;
+
+            var elements = new List<string>();
+            elements.Add(_selectedNode.Id);
+            OnSelectionChanged?.Invoke(elements);
         }
 
         private void nameField_TextChanged(object sender, EventArgs e)
@@ -243,6 +188,11 @@ namespace FBXExporter.UI
                 return;
             }
             OnEditElementName?.Invoke(_selectedNode.Id, nameField.Text);
+        }
+
+        private void addEmptyButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FBXExporter.Extensions;
 
@@ -9,18 +7,13 @@ namespace FBXExporter.Entity
     [System.Serializable]
     public class JsonDb
     {
-        public Dictionary<string, string> Dictionary;
+        public Dictionary<string, string> Dictionary = new Dictionary<string, string>();
         public List<ElementData> ElementsList = new List<ElementData>();
 
         public void AddNewElement(ElementData elementData)
         {
             ElementsList.Add(elementData);
         }
-
-        //public ElementData GetElementById(string id)
-        //{
-            
-        //}
 
         public bool ContainsId(string id)
         {

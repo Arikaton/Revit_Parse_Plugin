@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -38,17 +37,43 @@ namespace FBXExporter.Entity
         public List<ElementData> GetAllElements()
         {
             var allElementsFromRevit = GetAllElementsFromRevit();
+            var groupChilds = new List<Element>();
 
             foreach (var element in allElementsFromRevit)
             {
-                // Skip group childs
-                if (element.GroupId.IntegerValue != -1) continue;
-
                 var elementID = element.Id.IntegerValue.ToString();
                 if (jsonDb.ContainsId(elementID)) continue;
 
+                // Skip group childs
+                if (element.GroupId.IntegerValue != -1 ) 
+                {
+                    groupChilds.Add(element);
+                    continue; 
+                }               
+
                 var newElement = new ElementData(elementID, element.Name);
                 jsonDb.AddNewElement(newElement);
+            }
+
+            foreach (var groupElement in groupChilds)
+            {
+                foreach (var element in jsonDb.ElementsList)
+                {
+                    if (groupElement.GroupId.IntegerValue.ToString() == element.Id)
+                    {
+                        var elementID = groupElement.Id.IntegerValue.ToString();
+                        var newGroupElement = new ElementData(elementID, groupElement.Name);
+                        newGroupElement.GroupName = groupElement.GroupId.IntegerValue.ToString();
+                        newGroupElement.Name = $"Group:{newGroupElement.GroupName} ID:{newGroupElement.Id}";
+                        element.Elements.Add(newGroupElement);                        
+                        if(string.IsNullOrEmpty(element.GroupName))
+                        {
+                            element.GroupName = groupElement.GroupId.IntegerValue.ToString();
+                            element.Name = "Group" + groupElement.GroupId.IntegerValue.ToString();
+                        }
+                        break;
+                    }
+                }
             }
             return jsonDb.ElementsList;
         }

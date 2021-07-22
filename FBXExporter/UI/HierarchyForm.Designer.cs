@@ -29,88 +29,19 @@ namespace FBXExporter.UI
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Узел1");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Узел2");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Узел0", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Узел4");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Узел5");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Узел3", new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5});
-            this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.RevitNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ParentColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.renameButton = new System.Windows.Forms.Button();
             this.databaseNameTextBox = new System.Windows.Forms.TextBox();
             this.changePathButton = new System.Windows.Forms.Button();
             this.treeView = new System.Windows.Forms.TreeView();
             this.nameField = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
+            this.label1 = new System.Windows.Forms.Label();
+            this.idLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // dataGrid
-            // 
-            this.dataGrid.AllowUserToAddRows = false;
-            this.dataGrid.AllowUserToDeleteRows = false;
-            this.dataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.RevitNameColumn,
-            this.IdColumn,
-            this.NameColumn,
-            this.ParentColumn});
-            this.dataGrid.Location = new System.Drawing.Point(734, 56);
-            this.dataGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGrid.Name = "dataGrid";
-            this.dataGrid.RowHeadersWidth = 51;
-            this.dataGrid.RowTemplate.Height = 24;
-            this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGrid.Size = new System.Drawing.Size(33, 289);
-            this.dataGrid.TabIndex = 0;
-            this.dataGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellValueChanged);
-            this.dataGrid.SelectionChanged += new System.EventHandler(this.dataGrid_SelectionChanged);
-            // 
-            // RevitNameColumn
-            // 
-            this.RevitNameColumn.FillWeight = 3F;
-            this.RevitNameColumn.HeaderText = "Element";
-            this.RevitNameColumn.MinimumWidth = 100;
-            this.RevitNameColumn.Name = "RevitNameColumn";
-            this.RevitNameColumn.ReadOnly = true;
-            // 
-            // IdColumn
-            // 
-            this.IdColumn.FillWeight = 1F;
-            this.IdColumn.HeaderText = "ID";
-            this.IdColumn.MinimumWidth = 60;
-            this.IdColumn.Name = "IdColumn";
-            this.IdColumn.ReadOnly = true;
-            // 
-            // NameColumn
-            // 
-            this.NameColumn.FillWeight = 5F;
-            this.NameColumn.HeaderText = "Имя";
-            this.NameColumn.MinimumWidth = 120;
-            this.NameColumn.Name = "NameColumn";
-            // 
-            // ParentColumn
-            // 
-            this.ParentColumn.FillWeight = 5F;
-            this.ParentColumn.HeaderText = "Родитель";
-            this.ParentColumn.MinimumWidth = 120;
-            this.ParentColumn.Name = "ParentColumn";
             // 
             // renameButton
             // 
             this.renameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.renameButton.Location = new System.Drawing.Point(624, 447);
+            this.renameButton.Location = new System.Drawing.Point(621, 418);
             this.renameButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.renameButton.Name = "renameButton";
             this.renameButton.Size = new System.Drawing.Size(143, 36);
@@ -122,7 +53,7 @@ namespace FBXExporter.UI
             // databaseNameTextBox
             // 
             this.databaseNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.databaseNameTextBox.Location = new System.Drawing.Point(16, 431);
+            this.databaseNameTextBox.Location = new System.Drawing.Point(16, 404);
             this.databaseNameTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.databaseNameTextBox.Multiline = true;
             this.databaseNameTextBox.Name = "databaseNameTextBox";
@@ -133,7 +64,7 @@ namespace FBXExporter.UI
             // changePathButton
             // 
             this.changePathButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.changePathButton.Location = new System.Drawing.Point(489, 447);
+            this.changePathButton.Location = new System.Drawing.Point(488, 418);
             this.changePathButton.Margin = new System.Windows.Forms.Padding(4);
             this.changePathButton.Name = "changePathButton";
             this.changePathButton.Size = new System.Drawing.Size(111, 36);
@@ -145,24 +76,12 @@ namespace FBXExporter.UI
             // treeView
             // 
             this.treeView.AllowDrop = true;
+            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView.Location = new System.Drawing.Point(16, 56);
             this.treeView.Name = "treeView";
-            treeNode1.Name = "Узел1";
-            treeNode1.Text = "Узел1";
-            treeNode2.Name = "Узел2";
-            treeNode2.Text = "Узел2";
-            treeNode3.Name = "Узел0";
-            treeNode3.Text = "Узел0";
-            treeNode4.Name = "Узел4";
-            treeNode4.Text = "Узел4";
-            treeNode5.Name = "Узел5";
-            treeNode5.Text = "Узел5";
-            treeNode6.Name = "Узел3";
-            treeNode6.Text = "Узел3";
-            this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode6});
-            this.treeView.Size = new System.Drawing.Size(477, 289);
+            this.treeView.Size = new System.Drawing.Size(499, 309);
             this.treeView.TabIndex = 4;
             this.treeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterCheck);
             this.treeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
@@ -172,23 +91,45 @@ namespace FBXExporter.UI
             // 
             // nameField
             // 
-            this.nameField.Location = new System.Drawing.Point(515, 176);
+            this.nameField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.nameField.Location = new System.Drawing.Point(536, 112);
             this.nameField.Name = "nameField";
             this.nameField.Size = new System.Drawing.Size(198, 22);
             this.nameField.TabIndex = 5;
             this.nameField.TextChanged += new System.EventHandler(this.nameField_TextChanged);
             // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(533, 68);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(141, 17);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Редактировать имя:";
+            // 
+            // idLabel
+            // 
+            this.idLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.idLabel.AutoSize = true;
+            this.idLabel.Location = new System.Drawing.Point(536, 89);
+            this.idLabel.Name = "idLabel";
+            this.idLabel.Size = new System.Drawing.Size(25, 17);
+            this.idLabel.TabIndex = 7;
+            this.idLabel.Text = "ID:";
+            // 
             // HierarchyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 496);
+            this.ClientSize = new System.Drawing.Size(776, 467);
+            this.Controls.Add(this.idLabel);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.nameField);
             this.Controls.Add(this.treeView);
             this.Controls.Add(this.changePathButton);
             this.Controls.Add(this.databaseNameTextBox);
             this.Controls.Add(this.renameButton);
-            this.Controls.Add(this.dataGrid);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -198,23 +139,18 @@ namespace FBXExporter.UI
             this.Text = "Иерархия";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HierarchyForm_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dataGrid;
         private System.Windows.Forms.Button renameButton;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RevitNameColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IdColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ParentColumn;
         private System.Windows.Forms.TextBox databaseNameTextBox;
         private System.Windows.Forms.Button changePathButton;
         private System.Windows.Forms.TreeView treeView;
         private System.Windows.Forms.TextBox nameField;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label idLabel;
     }
 }
