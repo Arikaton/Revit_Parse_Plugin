@@ -14,6 +14,8 @@ namespace FBXExporter.Views
         event Action<string, string> OnMoveElement;
         event Action<string> OnMoveElementToRoot;
         event Action<string, string> OnEditElementName;
+        event Action OnAddEmpty;
+        event Action<string> OnRemoveElement;
         string DatabasePath { set; }
         void Show();
         void Close();

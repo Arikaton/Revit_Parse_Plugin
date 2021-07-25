@@ -36,12 +36,14 @@ namespace FBXExporter.UI
             this.nameField = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.idLabel = new System.Windows.Forms.Label();
+            this.addEmptyButton = new System.Windows.Forms.Button();
+            this.removeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // renameButton
             // 
             this.renameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.renameButton.Location = new System.Drawing.Point(621, 418);
+            this.renameButton.Location = new System.Drawing.Point(657, 462);
             this.renameButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.renameButton.Name = "renameButton";
             this.renameButton.Size = new System.Drawing.Size(143, 36);
@@ -53,7 +55,7 @@ namespace FBXExporter.UI
             // databaseNameTextBox
             // 
             this.databaseNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.databaseNameTextBox.Location = new System.Drawing.Point(16, 404);
+            this.databaseNameTextBox.Location = new System.Drawing.Point(16, 448);
             this.databaseNameTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.databaseNameTextBox.Multiline = true;
             this.databaseNameTextBox.Name = "databaseNameTextBox";
@@ -63,8 +65,8 @@ namespace FBXExporter.UI
             // 
             // changePathButton
             // 
-            this.changePathButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.changePathButton.Location = new System.Drawing.Point(488, 418);
+            this.changePathButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.changePathButton.Location = new System.Drawing.Point(481, 462);
             this.changePathButton.Margin = new System.Windows.Forms.Padding(4);
             this.changePathButton.Name = "changePathButton";
             this.changePathButton.Size = new System.Drawing.Size(111, 36);
@@ -81,7 +83,7 @@ namespace FBXExporter.UI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView.Location = new System.Drawing.Point(16, 56);
             this.treeView.Name = "treeView";
-            this.treeView.Size = new System.Drawing.Size(499, 309);
+            this.treeView.Size = new System.Drawing.Size(535, 353);
             this.treeView.TabIndex = 4;
             this.treeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterCheck);
             this.treeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
@@ -92,7 +94,7 @@ namespace FBXExporter.UI
             // nameField
             // 
             this.nameField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nameField.Location = new System.Drawing.Point(536, 112);
+            this.nameField.Location = new System.Drawing.Point(572, 112);
             this.nameField.Name = "nameField";
             this.nameField.Size = new System.Drawing.Size(198, 22);
             this.nameField.TabIndex = 5;
@@ -102,7 +104,7 @@ namespace FBXExporter.UI
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(533, 68);
+            this.label1.Location = new System.Drawing.Point(569, 68);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(141, 17);
             this.label1.TabIndex = 6;
@@ -112,17 +114,42 @@ namespace FBXExporter.UI
             // 
             this.idLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.idLabel.AutoSize = true;
-            this.idLabel.Location = new System.Drawing.Point(536, 89);
+            this.idLabel.Location = new System.Drawing.Point(572, 89);
             this.idLabel.Name = "idLabel";
             this.idLabel.Size = new System.Drawing.Size(25, 17);
             this.idLabel.TabIndex = 7;
             this.idLabel.Text = "ID:";
             // 
+            // addEmptyButton
+            // 
+            this.addEmptyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.addEmptyButton.Location = new System.Drawing.Point(16, 415);
+            this.addEmptyButton.Name = "addEmptyButton";
+            this.addEmptyButton.Size = new System.Drawing.Size(218, 26);
+            this.addEmptyButton.TabIndex = 8;
+            this.addEmptyButton.Text = "Добавить пустой элемент";
+            this.addEmptyButton.UseVisualStyleBackColor = true;
+            this.addEmptyButton.Click += new System.EventHandler(this.addEmptyButton_Click);
+            // 
+            // removeButton
+            // 
+            this.removeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.removeButton.Enabled = false;
+            this.removeButton.Location = new System.Drawing.Point(259, 415);
+            this.removeButton.Name = "removeButton";
+            this.removeButton.Size = new System.Drawing.Size(164, 26);
+            this.removeButton.TabIndex = 9;
+            this.removeButton.Text = "Удалить";
+            this.removeButton.UseVisualStyleBackColor = true;
+            this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
+            // 
             // HierarchyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(776, 467);
+            this.ClientSize = new System.Drawing.Size(812, 511);
+            this.Controls.Add(this.removeButton);
+            this.Controls.Add(this.addEmptyButton);
             this.Controls.Add(this.idLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.nameField);
@@ -152,5 +179,7 @@ namespace FBXExporter.UI
         private System.Windows.Forms.TextBox nameField;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label idLabel;
+        private System.Windows.Forms.Button addEmptyButton;
+        private System.Windows.Forms.Button removeButton;
     }
 }

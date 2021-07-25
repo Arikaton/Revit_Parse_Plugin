@@ -42,6 +42,8 @@ namespace FBXExporter.Presenters
             _view.OnMoveElement += MoveElementHandler;
             _view.OnMoveElementToRoot += MoveElementToRootHandler;
             _view.OnEditElementName += OnEditElementNameHandler;
+            _view.OnAddEmpty += OnAddEmptyHandler;
+            _view.OnRemoveElement += OnRemoveElementHandler;
 
             _hierarchy.OnSelectionChange += RevitSelectionChangedHandler;
         }
@@ -56,8 +58,22 @@ namespace FBXExporter.Presenters
             _view.OnMoveElement -= MoveElementHandler;
             _view.OnMoveElementToRoot -= MoveElementToRootHandler;
             _view.OnEditElementName -= OnEditElementNameHandler;
+            _view.OnAddEmpty -= OnAddEmptyHandler;
+            _view.OnRemoveElement -= OnRemoveElementHandler;
 
             _hierarchy.OnSelectionChange -= RevitSelectionChangedHandler;
+        }
+
+        private void OnRemoveElementHandler(string id)
+        {
+            _hierarchy.RemoveEmptyElement(id);
+            LoadAllElements();
+        }
+
+        private void OnAddEmptyHandler()
+        {
+            _hierarchy.AddEmptyElement();
+            LoadAllElements();
         }
 
         private void OnEditElementNameHandler(string id, string newName)

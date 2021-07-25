@@ -18,6 +18,8 @@ namespace FBXExporter.UI
         public event Action<string, string> OnMoveElement;
         public event Action<string> OnMoveElementToRoot;
         public event Action<string, string> OnEditElementName;
+        public event Action OnAddEmpty;
+        public event Action<string> OnRemoveElement;
 
         public string DatabasePath { set => databaseNameTextBox.Text = value; }
 
@@ -178,6 +180,15 @@ namespace FBXExporter.UI
             var elements = new List<string>();
             elements.Add(_selectedNode.Id);
             OnSelectionChanged?.Invoke(elements);
+
+            if(_selectedNode.Id.StartsWith("Empty_"))
+            {
+                removeButton.Enabled = true;
+            }
+            else
+            {
+                removeButton.Enabled = false;
+            }
         }
 
         private void nameField_TextChanged(object sender, EventArgs e)
@@ -192,7 +203,13 @@ namespace FBXExporter.UI
 
         private void addEmptyButton_Click(object sender, EventArgs e)
         {
+            OnAddEmpty?.Invoke();
+        }
 
+        private void removeButton_Click(object sender, EventArgs e)
+        {
+            var selectedNode = (ElementDataNode)treeView.SelectedNode;
+            OnRemoveElement?.Invoke(selectedNode.Id);
         }
     }
 }

@@ -42,9 +42,41 @@ namespace FBXExporter.Entity
             sourceElement.ParentName = null;
         }
 
-        private void RemoveFromList(ElementData element)
+        public void AddEmptyElement()
         {
-            var parent = FindParent(element.Id);
+            int lastId = -1;
+            foreach (ElementData elementData in ElementsList.GetRecursively<ElementData>(x => x.Elements))
+            {
+                if (elementData.Id.StartsWith("Empty_"))
+                {
+                    var idString = elementData.Id.Replace("Empty_", "");
+                    int id = int.Parse(idString);
+                    if (id > lastId)
+                        lastId = id;
+                }
+            }
+            int newId = ++lastId;
+            ElementsList.Add(new ElementData($"Empty_{newId}", "", $"Empty Element {newId}", ""));
+        }
+
+        public void RemoveElement(string id)
+        {
+            foreach (ElementData elementData in ElementsList.GetRecursively<ElementData>(x => x.Elements))
+            {
+                if (elementData.Id != id) continue;
+                foreach (var child in elementData.Elements)
+                {
+                    MoveToRoot(child.Id);
+                }
+                RemoveElementWithChildren(id);
+                break;
+            }
+        }
+
+        public void RemoveElementWithChildren(string id)
+        {
+            var element = FindElement(id);
+            var parent = FindParent(id);
             if (parent != null)
             {
                 parent.Elements.Remove(element);
@@ -58,6 +90,19 @@ namespace FBXExporter.Entity
         public ElementData FindElement(string id)
         {
             return ElementsList.GetRecursively<ElementData>(x => x.Elements).Where(x => x.Id == id).First();
+        }
+
+        private void RemoveFromList(ElementData element)
+        {
+            var parent = FindParent(element.Id);
+            if (parent != null)
+            {
+                parent.Elements.Remove(element);
+            }
+            else
+            {
+                ElementsList.Remove(element);
+            }
         }
 
         private ElementData FindParent(string id)

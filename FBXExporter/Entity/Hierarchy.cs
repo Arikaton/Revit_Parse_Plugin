@@ -83,14 +83,15 @@ namespace FBXExporter.Entity
             List<ElementId> idsToSelect = new List<ElementId>();
 
             foreach (var id in ids)
-            {               
+            {
+                if (id.StartsWith("Empty_")) continue;
                 idsToSelect.Add(new ElementId(int.Parse(id)));
             }
 
             SelectElements(idsToSelect);
         }
 
-        internal void EditElementName(string id, string newName)
+        public void EditElementName(string id, string newName)
         {
             var elementData = GetElementData(id);
             elementData.Name = newName;
@@ -107,6 +108,21 @@ namespace FBXExporter.Entity
         {
             jsonDb.MoveToRoot(sourceId);
             SaveDatabase();
+        }
+
+        public void AddEmptyElement()
+        {
+            jsonDb.AddEmptyElement();            
+            SaveDatabase();
+        }
+
+        public void RemoveEmptyElement(string id)
+        {
+            if (jsonDb.FindElement(id).Id.StartsWith("Empty_"))
+            {
+                jsonDb.RemoveElement(id);
+                SaveDatabase();
+            }
         }
 
         public ElementData GetElementData(string id)
